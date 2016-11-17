@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+'use strict';
+const app = require('../app');
+const config = require('config-lite');
+const pkg = require('../package.json');
+// 监听端口，启动程序
+app.listen(config.port, function() {
+  console.log(`${pkg.name} listening on port ${config.port}`);
+});

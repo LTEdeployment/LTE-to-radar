@@ -1,7 +1,7 @@
 import * as types from '../../mutation-types'
 import { lazyLoading } from './lazyLoading'
 import charts from './charts'
-import events from './events'
+import tasks from './tasks'
 import uifeatures from './uifeatures'
 import components from './components'
 import tables from './tables'
@@ -21,7 +21,7 @@ const state = {
       component: lazyLoading('dashboard', true)
     },
     charts,
-    events,
+    tasks,
     uifeatures,
     components,
     tables

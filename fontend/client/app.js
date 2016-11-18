@@ -17,6 +17,7 @@ const nprogress = new NProgress({ parent: '.nprogress-container' })
 
 const { state } = store
 
+// 全局中间件
 router.beforeEach((route, redirect, next) => {
   // 若是移动端，那么取消滚动条
   if (state.app.device.isMobile && state.app.sidebar.opened) {
@@ -25,6 +26,7 @@ router.beforeEach((route, redirect, next) => {
   next()
 })
 
+// filters 目录下定义的过滤器
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })

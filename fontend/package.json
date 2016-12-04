@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "干扰计算平台提供一系列干扰计算服务",
   "repository": "none/none",
-  "homepage": "lte.xhinliang.com",
+  "homepage": "http://lte.xhinliang.com",
   "license": "none",
   "author": {
     "name": "Xhin Liang",
@@ -57,6 +57,7 @@
     "vue-bulma-tooltip": "github:vue-bulma/tooltip",
     "vue-canvas-gauges": "github:vue-bulma/canvas-gauges",
     "vue-cleave": "1.1.0",
+    "vue-cookie": "^1.1.3",
     "vue-handsontable": "github:vue-bulma/handsontable",
     "vue-lory": "0.0.4",
     "vue-nprogress": "0.1.2",

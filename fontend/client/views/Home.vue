@@ -10,7 +10,7 @@
       <strong>{{ description }}</strong>
     </p>
     <p>
-      <a :href="homepage">作者主页</a>
+      <a :href="author.url">作者主页</a>
     </p>
   </div>
 </template>

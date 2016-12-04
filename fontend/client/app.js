@@ -8,13 +8,15 @@ import store from './store'
 import * as filters from './filters'
 import { TOGGLE_SIDEBAR } from 'vuex-store/mutation-types'
 
+// vue-resource是Vue.js的一款插件，它可以通过XMLHttpRequest或JSONP发起请求并处理响应。
 Vue.use(Resource)
+// 进度条插件
 Vue.use(NProgress)
+Vue.http.options.emulateJSON = true
 
+// 没看懂，先不管
 sync(store, router)
-
 const nprogress = new NProgress({ parent: '.nprogress-container' })
-
 const { state } = store
 
 // 全局中间件
@@ -31,11 +33,13 @@ Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
 
-const app = new Vue({
+let paramsObj = {
   router,
   store,
   nprogress,
+  // 对象展开运算符，将 App 对象展开然后作为 paramsObj 对象的属性
   ...App
-})
+}
 
+const app = new Vue(paramsObj)
 export { app, router, store }

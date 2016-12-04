@@ -1,4 +1,4 @@
-import * as types from '../../mutation-types'
+import * as types from './mutation-types'
 import { lazyLoading } from './lazyLoading'
 import charts from './charts'
 import tasks from './tasks'
@@ -13,12 +13,20 @@ import tables from './tables'
 const state = {
   items: [
     {
-      name: '仪表盘',
-      path: '/dashboard',
+      name: '登录',
+      path: '/login',
       meta: {
         icon: 'fa-tachometer'
       },
-      component: lazyLoading('dashboard', true)
+      component: lazyLoading('login', true)
+    },
+    {
+      name: '注册',
+      path: '/register',
+      meta: {
+        icon: 'fa-tachometer'
+      },
+      component: lazyLoading('register', true)
     },
     charts,
     tasks,

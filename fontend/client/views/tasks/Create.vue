@@ -159,12 +159,19 @@
 </template>
 
 <script>
-import Cleave from 'vue-cleave'
-import 'cleave.js/dist/addons/cleave-phone.cn'
+import { mapGetters } from 'vuex'
 
 export default {
-  components: {
-    Cleave
+  computed: mapGetters({
+    sidebar: 'sidebar',
+    user: 'user'
+  }),
+
+  created () {
+    if (!this.user.username) {
+      console.log(JSON.stringify(this.user))
+      this.$router.push('/login')
+    }
   }
 }
 </script>

@@ -2,7 +2,7 @@
   <div id="app">
     <nprogress-container></nprogress-container>
     <navbar :show="true"></navbar>
-    <sidebar :show="sidebar.opened && !sidebar.hidden"></sidebar>
+    <sidebar :show="sidebar.opened && !sidebar.hidden && user.username"></sidebar>
     <app-main></app-main>
     <footer-bar></footer-bar>
   </div>
@@ -20,6 +20,12 @@ export default {
     AppMain,
     FooterBar,
     NprogressContainer
+  },
+
+  created () {
+    if (!this.user.username) {
+      console.log(JSON.stringify(this.user))
+    }
   },
 
   beforeMount () {
@@ -42,7 +48,8 @@ export default {
   },
 
   computed: mapGetters({
-    sidebar: 'sidebar'
+    sidebar: 'sidebar',
+    user: 'user'
   }),
 
   methods: mapActions([

@@ -14,12 +14,12 @@
             <i class="fa fa-lock"></i>
           </p>
           <p class="control">
-            <button class="button is-success">
+            <button @click="login" class="button is-success">
                 登录
             </button>
           </p>
           <p class="control">
-            <button class="button">
+            <button @click="goRegister" class="button">
                 注册
             </button>
           </p>
@@ -51,21 +51,31 @@ export default {
     sidebar: 'sidebar'
   }),
 
-  methods: mapActions([
-    'toggleSidebar'
-  ])
+  methods: {
+    ...mapActions([
+      'toggleSidebar',
+      'loginLogin'
+    ]),
+
+    login () {
+    },
+
+    goRegister () {
+      this.$router.push('/register')
+    }
+  }
 }
 </script>
 
 <style lang="scss">
-@import '~bulma';
+@import '~bulma/sass/utilities/variables';
+@import '~bulma/sass/utilities/mixins';
+
 .button {
   width: 100%;
 }
 
 .divbody {
-  margin-left: -180px;
-
   @include mobile() {
     margin-left: 0;
   }
@@ -74,6 +84,6 @@ export default {
 div.tile {
   border: 0px solid black;
   margin: 0 auto;
-  width: 300px;
+  //width: 300px;
 }
 </style>

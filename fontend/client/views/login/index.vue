@@ -58,6 +58,7 @@ export default {
     ]),
 
     login () {
+      this.loginLogin('fef')
     },
 
     goRegister () {

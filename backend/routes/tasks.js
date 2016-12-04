@@ -6,7 +6,7 @@ const cache = require('../lib/cache');
 const TASK_QUEUE_NAME = 'task_queue';
 
 // 根据任务 ID 查询指定的任务
-router.get('/id/:id', check.checkLogin, function(req, res, next) {
+router.get('/id/:id', check.checkNotLogin, function(req, res, next) {
   let author = req.session.user._id;
   let id = req.params.id;
   TaskModel
@@ -18,6 +18,12 @@ router.get('/id/:id', check.checkLogin, function(req, res, next) {
     .catch(function(e) {
       next(e);
     })
+});
+
+router.get('/test', check.checkNotLogin, function(req, res, next) {
+  return res.send(JSON.stringify({
+    "message": "test"
+  }));
 });
 
 // 获取该用户的所有任务

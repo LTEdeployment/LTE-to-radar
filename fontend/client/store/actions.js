@@ -1,6 +1,20 @@
 import * as types from './mutation-types'
+import Vue from 'vue'
 
-export const loginLogin = ({commit}, user) => {
+export const userLogin = ({commit}, username, password) => {
+  Vue.http.get(``).then(function (response) {
+    console.log(response.body)
+  }, function (error) {
+    console.log(error)
+  })
+}
+
+export const userRegister = ({commit}, username, password) => {
+  Vue.http.get(``).then(function (response) {
+    console.log(response.body)
+  }, function (error) {
+    console.log(error)
+  })
 }
 
 export const toggleSidebar = ({ commit }, opened) => {

@@ -1,21 +1,16 @@
-const User = require('../lib/mongo').User;
+var User = require('../lib/mongo').User;
 
-let pub = {};
+module.exports = {
+  // 注册一个用户
+  create: function create(user) {
+    return User.create(user).exec();
+  },
 
-// 注册一个用户
-pub.create = function(user) {
-  return User
-    .create(user)
-    .exec();
+  // 通过用户名获取用户信息
+  getUserByEmail: function getUserByEmail(email) {
+    return User
+      .findOne({ email })
+      .addCreatedAt()
+      .exec();
+  }
 };
-
-// 通过用户名获取用户信息
-pub.getUserByName = function(name) {
-  return User
-    .findOne({
-      name: name
-    })
-    .addCreatedAt()
-    .exec();
-}
-module.exports = pub;

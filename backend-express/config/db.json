@@ -1,9 +1,0 @@
-{
-  "mongoUrl": "mongodb://localhost",
-  "cookieSecret": "xhinliang-secret",
-  "mongo_name": "lte-compute",
-  "mongo_host": "localhost",
-  "mongo_port": 27017,
-  "redis_host": "127.0.0.1",
-  "redis_port": "6379"
-}

@@ -1,18 +1,14 @@
-let pub = function(app) {
-  app.use('/', require('./tasks'));
-  app.use('/signup', require('./signup'));
-  app.use('/signin', require('./signin'));
-  app.use('/signout', require('./signout'));
-  app.use('/tasks', require('./tasks'));
+module.exports = function (app) {
+  app.get('/', function (req, res) {
+    res.redirect('/user/profile');
+  });
+  app.use('/user', require('./user'));
+  app.use('/api', require('./api'));
+
   // 404 page
-  app.use(function(req, res) {
+  app.use(function (req, res) {
     if (!res.headersSent) {
-      res.status(404);
-      res.json({
-        message: 'NOT FOUND'
-      });
+      res.render('404');
     }
   });
 };
-
-module.exports = pub;

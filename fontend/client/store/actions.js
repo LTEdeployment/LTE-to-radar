@@ -19,7 +19,7 @@ export const userRegister = ({commit}, username, password, description) => {
       console.log(response.body)
     }, function (error) {
       console.log(error)
-      })
+    })
 }
 
 export const toggleSidebar = ({ commit }, opened) => {

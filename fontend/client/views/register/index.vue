@@ -14,7 +14,11 @@
             <i class="fa fa-lock"></i>
           </p>
           <p class="control has-icon">
-            <input class="input" type="text" placeholder="邀请码">
+            <input class="input" type="password" placeholder="重复密码">
+            <i class="fa fa-lock"></i>
+          </p>
+          <p class="control has-icon">
+            <input class="input" type="text" placeholder="一句话简介">
             <i class="fa fa-lock"></i>
           </p>
           <p class="control">

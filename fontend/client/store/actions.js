@@ -11,6 +11,7 @@ export const userLogin = ({commit}, payload) => {
       let email = response.body.data.email
       console.log(`user logined: ${email}`)
       commit(types.LOGIN, email)
+      payload.router.push('/')
     }, function (error) {
       console.log('error' + error)
     })
@@ -28,12 +29,13 @@ export const userCheck = ({commit}) => {
     })
 }
 
-export const userLogout = ({commit}) => {
+export const userLogout = ({commit}, payload) => {
   Vue.http
     .get(`${BASE_API_URL}user/signout`)
     .then(function (response) {
       console.log(`user logout`)
       commit(types.LOGOUT)
+      payload.router.push('/login')
     }, function (error) {
       console.log('error' + error)
     })

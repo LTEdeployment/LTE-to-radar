@@ -31,10 +31,7 @@
 </template>
 
 <script>
-import {
-  mapGetters,
-  mapActions
-} from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {},
@@ -79,7 +76,7 @@ export default {
 
     login () {
       console.log(`email: ${this.email}, password: ${this.password}`)
-      this.userLogin({email: this.email, password: this.password})
+      this.userLogin({email: this.email, password: this.password, router: this.$router})
     },
 
     goRegister () {

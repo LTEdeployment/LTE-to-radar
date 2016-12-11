@@ -97,7 +97,7 @@ export default {
     ]),
 
     logout () {
-      this.userLogout()
+      this.userLogout({router: this.$router})
     }
   }
 }

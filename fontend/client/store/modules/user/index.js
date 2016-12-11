@@ -7,6 +7,10 @@ const state = {
 const mutations = {
   [types.LOGIN] (state, email) {
     state.email = email
+  },
+
+  [types.LOGOUT] (state) {
+    state.email = null
   }
 }
 

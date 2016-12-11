@@ -3,9 +3,10 @@ import Vue from 'vue'
 
 const BASE_API_URL = 'http://computebackend.webdev.com/api/'
 
-export const userLogin = ({commit}, email, password) => {
+export const userLogin = ({commit}, payload) => {
+  console.log(`action login: ${payload.email} ${payload.password}`)
   Vue.http
-    .post(`${BASE_API_URL}user/signin`, {email, password}, {xhr: {withCredentials: true}})
+    .post(`${BASE_API_URL}user/signin`, {email: payload.email, password: payload.password}, {xhr: {withCredentials: true}})
     .then(function (response) {
       let email = response.body.data.email
       console.log(`user logined: ${email}`)
@@ -31,7 +32,8 @@ export const userLogout = ({commit}) => {
   Vue.http
     .get(`${BASE_API_URL}user/signout`)
     .then(function (response) {
-
+      console.log(`user logout`)
+      commit(types.LOGOUT)
     }, function (error) {
       console.log('error' + error)
     })

@@ -23,7 +23,7 @@ export default {
   },
 
   mounted () {
-    if (!this.user.email) {
+    if (!!this.user && !this.user.email) {
       this.userCheck()
     }
   },

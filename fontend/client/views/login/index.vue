@@ -6,7 +6,7 @@
         <h1 class="title" />
         <div class="block">
           <p class="control has-icon">
-            <input class="input" v-model="email" type="email" placeholder="邮箱">
+            <input class="input" v-model="email" type="username" placeholder="邮箱">
             <i class="fa fa-envelope"></i>
           </p>
           <p class="control has-icon">
@@ -79,7 +79,7 @@ export default {
 
     login () {
       console.log(`email: ${this.email}, password: ${this.password}`)
-      this.userLogin(this.email, this.password)
+      this.userLogin({email: this.email, password: this.password})
     },
 
     goRegister () {

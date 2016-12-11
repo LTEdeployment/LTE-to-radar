@@ -63,10 +63,6 @@ router.post('/signup', checkNotLogin, function(req, res, next) {
   var password = req.body.password;
   var repassword = req.body.repassword;
 
-  password = '666666';
-  repassword = '666666';
-  bio = 'wefwe';
-
   // 校验参数
   try {
     if (!(email.length >= 1 && email.length <= 10)) {

@@ -30,9 +30,11 @@ export default {
 .app-main {
   padding-top: 50px;
   transform: translate3d(0, 0, 0);
+  padding-left: 180px;
 
   @include mobile() {
-    margin-left: 0;
+    margin-left: 0px;
+    padding-left: 0px;
   }
 
 }

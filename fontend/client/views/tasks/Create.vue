@@ -167,9 +167,8 @@ export default {
     user: 'user'
   }),
 
-  created () {
-    if (!this.user.username) {
-      console.log(JSON.stringify(this.user))
+  mounted () {
+    if (!this.user.email) {
       this.$router.push('/login')
     }
   }

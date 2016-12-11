@@ -6,6 +6,10 @@ var UserModel = require('../../models/users');
 var checkNotLogin = require('../../middlewares/apicheck').checkNotLogin;
 var checkLogin = require('../../middlewares/apicheck').checkLogin;
 
+router.get('/check', checkLogin, function(req, res, next) {
+    res.json({code: 0, message: 'ok', data: req.session.user});
+});
+
 // POST /signin 用户登录
 router.post('/signin', checkNotLogin, function(req, res, next) {
   var email = req.body.email;
@@ -34,7 +38,8 @@ router.post('/signin', checkNotLogin, function(req, res, next) {
       // 跳转到主页
       return res.json({
         code: 0,
-        message: 'ok'
+        message: 'ok',
+        data: user
       });
     })
     .catch(next);
@@ -46,7 +51,7 @@ router.get('/signout', checkLogin, function(req, res, next) {
   req.session.user = null;
   res.json({
     code: 0,
-    message: ok
+    message: 'ok'
   });
 });
 

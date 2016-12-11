@@ -1,14 +1,12 @@
-import * as types from './mutation-types'
+import * as types from '../../mutation-types'
 
 const state = {
-  user: {
-    username: null
-  }
+  email: null
 }
 
 const mutations = {
-  [types.LOGIN] (state, user) {
-    state.user = user
+  [types.LOGIN] (state, email) {
+    state.email = email
   }
 }
 

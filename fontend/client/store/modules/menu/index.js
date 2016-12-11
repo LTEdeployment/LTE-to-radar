@@ -1,15 +1,17 @@
-import * as types from './mutation-types'
+import * as types from '../../mutation-types'
 import { lazyLoading } from './lazyLoading'
 import charts from './charts'
 import tasks from './tasks'
+import profile from './profile'
 import uifeatures from './uifeatures'
 import components from './components'
 import tables from './tables'
 
-// show: meta.label -> name
-// name: component name
-// meta.label: display label
-
+/*
+ * show: meta.label -> name
+ * meta.label: display label
+ * name: component name
+ */
 const state = {
   items: [
     {
@@ -32,7 +34,8 @@ const state = {
     tasks,
     uifeatures,
     components,
-    tables
+    tables,
+    profile
   ]
 }
 

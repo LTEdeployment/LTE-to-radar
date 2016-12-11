@@ -2,7 +2,7 @@
   <div id="app">
     <nprogress-container></nprogress-container>
     <navbar :show="true"></navbar>
-    <sidebar :show="sidebar.opened && !sidebar.hidden && user.username"></sidebar>
+    <sidebar :show="sidebar.opened && !sidebar.hidden && !!user.email"></sidebar>
     <app-main></app-main>
     <footer-bar></footer-bar>
   </div>
@@ -22,9 +22,9 @@ export default {
     NprogressContainer
   },
 
-  created () {
-    if (!this.user.username) {
-      console.log(JSON.stringify(this.user))
+  mounted () {
+    if (!this.user.email) {
+      this.userCheck()
     }
   },
 
@@ -52,10 +52,13 @@ export default {
     user: 'user'
   }),
 
-  methods: mapActions([
-    'toggleDevice',
-    'toggleSidebar'
-  ])
+  methods: {
+    ...mapActions([
+      'toggleDevice',
+      'toggleSidebar',
+      'userCheck'
+    ])
+  }
 }
 </script>
 

@@ -6,11 +6,11 @@
         <h1 class="title" />
         <div class="block">
           <p class="control has-icon">
-            <input class="input" type="email" placeholder="邮箱">
+            <input class="input" v-model="email" type="email" placeholder="邮箱">
             <i class="fa fa-envelope"></i>
           </p>
           <p class="control has-icon">
-            <input class="input" type="password" placeholder="密码">
+            <input class="input" v-model="password" type="password" placeholder="密码">
             <i class="fa fa-lock"></i>
           </p>
           <p class="control">
@@ -47,22 +47,44 @@ export default {
     this.toggleSidebar(true)
   },
 
+  activated () {
+    console.log(`activated`)
+  },
+
+  mounted () {
+    console.log(`mounted`)
+    if (this.user.email) {
+      console.log(`already logined, redirect.`)
+      this.$router.push('/')
+    }
+  },
+
   computed: mapGetters({
-    sidebar: 'sidebar'
+    sidebar: 'sidebar',
+    user: 'user'
   }),
+
+  data () {
+    return {
+      email: '',
+      password: ''
+    }
+  },
 
   methods: {
     ...mapActions([
       'toggleSidebar',
-      'loginLogin'
+      'userLogin'
     ]),
 
     login () {
-      this.loginLogin('fef')
+      console.log(`email: ${this.email}, password: ${this.password}`)
+      this.userLogin(this.email, this.password)
     },
 
     goRegister () {
       this.$router.push('/register')
+      // this.userLogout()
     }
   }
 }
@@ -78,7 +100,8 @@ export default {
 
 .divbody {
   @include mobile() {
-    margin-left: 0;
+    margin-left: 0px;
+    padding-left: 0px;
   }
 }
 

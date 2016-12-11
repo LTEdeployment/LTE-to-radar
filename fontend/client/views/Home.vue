@@ -16,9 +16,22 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data () {
     return this.$store.state.pkg
+  },
+
+  computed: mapGetters({
+    sidebar: 'sidebar',
+    user: 'user'
+  }),
+
+  mounted () {
+    if (!this.user.email) {
+      this.$router.push('/login')
+    }
   }
 }
 </script>

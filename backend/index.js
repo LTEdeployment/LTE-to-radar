@@ -47,6 +47,19 @@ app.use(bodyParser.json());
 app.use(flash());
 
 
+// 跨域支持
+app.all('/api/*', (req, res, next) => {
+  const origin = req.headers.origin;
+  if (config["white_origins"].indexOf(origin) !== -1) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS, DELETE');
+  }
+  next();
+});
+
+
 // 设置模板全局常量
 app.locals.blog = {
   title: pkg.name,
@@ -76,6 +89,7 @@ app.use(expressWinston.logger({
 
 // 路由
 routes(app);
+
 // 错误请求的日志
 app.use(expressWinston.errorLogger({
   transports: [

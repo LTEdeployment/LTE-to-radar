@@ -13,6 +13,9 @@ Vue.use(Resource)
 // 进度条插件
 Vue.use(NProgress)
 Vue.http.options.emulateJSON = true
+// 添加跨域支持
+Vue.http.options.credentials = true
+Vue.http.options.xhr = { withCredentials: true }
 
 // 没看懂，先不管
 sync(store, router)

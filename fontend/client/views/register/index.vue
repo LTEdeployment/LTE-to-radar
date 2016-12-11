@@ -42,6 +42,18 @@ import {
 export default {
   components: {},
 
+  activated () {
+    console.log(`activated`)
+  },
+
+  mounted () {
+    console.log(`mounted`)
+    if (this.user.email) {
+      console.log(`already logined, redirect.`)
+      this.$router.push('/')
+    }
+  },
+
   beforeMount () {
     this.toggleSidebar(false)
   },
@@ -51,7 +63,8 @@ export default {
   },
 
   computed: mapGetters({
-    sidebar: 'sidebar'
+    sidebar: 'sidebar',
+    user: 'user'
   }),
 
   methods: mapActions([

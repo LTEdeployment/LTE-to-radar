@@ -2,6 +2,7 @@ import * as types from './mutation-types'
 import Vue from 'vue'
 
 const BASE_API_URL = 'http://computebackend.webdev.com/api/'
+// const BASE_API_URL = 'http://computebackend.xhinliang.com/api/'
 
 export const userLogin = ({commit}, payload) => {
   console.log(`action login: ${payload.email} ${payload.password}`)
@@ -51,9 +52,9 @@ export const userRegister = ({commit}, email, password, bio) => {
     })
 }
 
-export const taskCreate = ({commit}, bundle) => {
+export const taskCreate = ({commit}, payload) => {
   Vue.http
-    .post(`${BASE_API_URL}task/create`, {bundle})
+    .post(`${BASE_API_URL}tasks/create`, {bundle: payload})
     .then(function (response) {
       console.log(response.body)
     }, function (error) {

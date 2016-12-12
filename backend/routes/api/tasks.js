@@ -49,13 +49,15 @@ router.get('/list', check.checkLogin, function(req, res, next) {
 
 // 创建一个新的任务
 router.post('/create', check.checkLogin, function(req, res, next) {
-  let author = req.session.user._id;
-  let parcel = req.body.parcel;
+  let author = req.session.user.email;
+  let paramUser = req.body.paramUser;
+  let paramLte = req.body.paramLte;
+  let paramRadar = req.body.paramRadar;
 
   // 拼装一个 任务
   let tempTask = {
-    author: author,
-    parcel: parcel
+    author,
+    bundle: req.body.bundle
   };
 
   TaskModel

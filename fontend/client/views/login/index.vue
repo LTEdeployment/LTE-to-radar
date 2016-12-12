@@ -40,20 +40,20 @@ export default {
     this.toggleSidebar(false)
   },
 
-  beforeDestroy () {
-    this.toggleSidebar(true)
-  },
-
-  activated () {
-    console.log(`activated`)
-  },
-
   mounted () {
     console.log(`mounted`)
     if (this.user.email) {
       console.log(`already logined, redirect.`)
       this.$router.push('/')
     }
+  },
+
+  activated () {
+    console.log(`activated`)
+  },
+
+  beforeDestroy () {
+    this.toggleSidebar(true)
   },
 
   computed: mapGetters({

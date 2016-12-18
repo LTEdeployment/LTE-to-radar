@@ -1,7 +1,7 @@
 import * as types from './mutation-types'
 import Vue from 'vue'
 
-//const BASE_API_URL = 'http://computebackend.webdev.com/api/'
+// const BASE_API_URL = 'http://computebackend.webdev.com/api/'
 const BASE_API_URL = 'http://computebackend.xhinliang.com/api/'
 
 export const userLogin = ({commit}, payload) => {

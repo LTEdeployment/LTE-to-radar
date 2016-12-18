@@ -24,7 +24,7 @@ export default {
 
   mounted () {
     if (!!this.user && !this.user.email) {
-      this.userCheck()
+      this.userCheck({router: this.$router})
     }
   },
 

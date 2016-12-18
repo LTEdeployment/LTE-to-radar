@@ -6,23 +6,23 @@
         <h1 class="title" />
         <div class="block">
           <p class="control has-icon">
-            <input class="input" type="email" placeholder="邮箱">
+            <input class="input" v-model="email" type="email" placeholder="邮箱">
             <i class="fa fa-envelope"></i>
           </p>
           <p class="control has-icon">
-            <input class="input" type="password" placeholder="密码">
+            <input class="input" v-model="password" type="password" placeholder="密码">
             <i class="fa fa-lock"></i>
           </p>
           <p class="control has-icon">
-            <input class="input" type="password" placeholder="重复密码">
+            <input class="input" v-model="repassword" type="password" placeholder="重复密码">
             <i class="fa fa-lock"></i>
           </p>
           <p class="control has-icon">
-            <input class="input" type="text" placeholder="一句话简介">
+            <input class="input" v-model="bio" type="text" placeholder="一句话简介">
             <i class="fa fa-lock"></i>
           </p>
           <p class="control">
-            <button class="button is-success">
+            <button @click="register" class="button is-success">
                 注册
             </button>
           </p>
@@ -62,14 +62,30 @@ export default {
     this.toggleSidebar(true)
   },
 
+  data () {
+    return {
+      email: '',
+      password: '',
+      repassword: '',
+      bio: ''
+    }
+  },
+
   computed: mapGetters({
     sidebar: 'sidebar',
     user: 'user'
   }),
 
-  methods: mapActions([
-    'toggleSidebar'
-  ])
+  methods: {
+    ...mapActions([
+      'toggleSidebar',
+      'userRegister'
+    ]),
+
+    register () {
+      this.userRegister({email: this.email, password: this.password, bio: this.bio, router: this.$router})
+    }
+  }
 }
 </script>
 

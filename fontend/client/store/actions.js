@@ -9,6 +9,10 @@ export const userLogin = ({commit}, payload) => {
   Vue.http
     .post(`${BASE_API_URL}user/signin`, {email: payload.email, password: payload.password}, {xhr: {withCredentials: true}})
     .then(function (response) {
+      if (response.body.code !== 0) {
+        console.log(`user logined: ` + JSON.stringify(response.body))
+        return
+      }
       let email = response.body.data.email
       console.log(`user logined: ${email}`)
       commit(types.LOGIN, email)
@@ -18,13 +22,19 @@ export const userLogin = ({commit}, payload) => {
     })
 }
 
-export const userCheck = ({commit}) => {
+export const userCheck = ({commit}, payload) => {
   Vue.http
     .get(`${BASE_API_URL}user/check`)
     .then(function (response) {
+      console.log(response.body)
+      if (response.body.code !== 0) {
+        payload.router.push('/login')
+        return
+      }
       let email = response.body.data.email
       console.log(`user checked: ${email}`)
       commit(types.LOGIN, email)
+      payload.router.push('/')
     }, function (error) {
       console.log('error' + error)
     })
@@ -34,6 +44,9 @@ export const userLogout = ({commit}, payload) => {
   Vue.http
     .get(`${BASE_API_URL}user/signout`)
     .then(function (response) {
+      if (response.body.code !== 0) {
+        return
+      }
       console.log(`user logout`)
       commit(types.LOGOUT)
       payload.router.push('/login')
@@ -42,11 +55,16 @@ export const userLogout = ({commit}, payload) => {
     })
 }
 
-export const userRegister = ({commit}, email, password, bio) => {
+export const userRegister = ({commit}, payload) => {
   Vue.http
-    .post(`${BASE_API_URL}user/signup`, {email, password, bio})
+    .post(`${BASE_API_URL}user/signup`, {email: payload.email, password: payload.password, bio: payload.bio})
     .then(function (response) {
-      console.log(response.body)
+      if (response.body.code !== 0) {
+        console.log('register error' + JSON.stringify(response.body))
+        return
+      }
+      commit(types.LOGIN, payload.email)
+      payload.router.push('/')
     }, function (error) {
       console.log('error' + error)
     })

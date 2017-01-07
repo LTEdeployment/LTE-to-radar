@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import random as r
 from math import *
 from Lte_Node_Generation import *

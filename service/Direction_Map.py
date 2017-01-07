@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from math import *
 
 
@@ -35,5 +36,3 @@ def resort(x,antenna_flagx):
             d_f_copy2[i][j] = d_f_copy1[i][j - 181]
         j += 1
     return d_f_copy2
-
-

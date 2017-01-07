@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from math import *
 
 def attenuation(hr,hb,frequency,distance,enviorment1,enviorment2):#参数分别为：接收方高度，发射方高度，双方距离，环境1分为大城市或中小城市，环境2分为城市，郊区，农村，丘陵，开阔区
@@ -75,4 +76,3 @@ def attenuation(hr,hb,frequency,distance,enviorment1,enviorment2):#参数分别�
     elif frequency > 5400:
         path_loss = 30.9 + 32.7 * log10(distance)
     return path_loss##返回衰减
-

@@ -1,10 +1,9 @@
+# -*- coding: utf-8 -*-
 from Lte_Node_Generation import *
 from User_Generation import *
 from Radar_Generation import *
 from User_Power_Control import *
 from Gain import *
-from Paint import *
-
 
 # 单位dbm转w
 def dbm_convert_w(x_dbm):
@@ -56,6 +55,7 @@ def sum_impact(legal_lte_numbers, user_numbers, lte_direction_factor, user_direc
                bindwidth):
     impact = 0
     Kpm = 0
+    node_numbers = 1
     if branch == 2:  # 下行链路，只有基站
         for i in range(legal_lte_numbers):
             impact += lte_single_impact(lte[i].trans_power, lte[i].x, lte[i].y, lte[i].distance, lte[i].height,
@@ -97,7 +97,6 @@ def gathering(antenna_flag, lte_min_d, sR, lR, lP, lH, lF, uH, uF, bindwidth, rH
     # 系统载入部分
     cell_radius, hexagon_length, legal_lte_numbers = lte_node_generation(sR, lR, antenna_flag,
                                                                          lte_min_d)  # 得到小区半径、六边形长度、有效基站数目
-    print(legal_lte_numbers)
     # LTE载入部分
     for i in range(legal_lte_numbers):
         lte[i].trans_power = lP  # 功率赋值
@@ -148,7 +147,6 @@ def judge_affect(antenna_flag, lte_min_d, sR, lR, lP, lH, lF, uH, uF, bindwidth,
                      user_direction_factor, radar_direction_factor, environment1, environment2, elevation, branch,
                      resource_block, lte_feederline_factor, radar_feederline_factor, lte_NF, user_NF,
                      radar_NF)  # 计算功率集总
-    print(haha)
     radar1.threshold = threshold
     if haha <= radar1.threshold:
         return False

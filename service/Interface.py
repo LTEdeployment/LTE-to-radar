@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from tkinter import *
 from Lumped_Power import *
 import scipy.io as scio  # 引入scipy库，用于导入mat文件中方向图数据

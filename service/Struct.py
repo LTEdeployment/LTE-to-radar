@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # 定义lte基站类
 class Lte:
     x = 0  # 横坐标

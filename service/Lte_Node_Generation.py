@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from math import *
 from Struct import *
 # from Interface import *

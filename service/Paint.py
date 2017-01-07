@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from tkinter import *
 from User_Generation import *
 
@@ -85,8 +86,3 @@ def paint(hexagon_length,legal_lte_numbers,user_numbers):
     for i in range(user_numbers):
         paint_user(i,hexagon_length,down_scale,plotting_scale,w)  # 画user
     mainloop()
-
-
-
-
-

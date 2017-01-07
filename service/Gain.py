@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Direction_Map import *
 
 

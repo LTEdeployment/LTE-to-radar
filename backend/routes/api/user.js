@@ -60,7 +60,6 @@ router.post('/signup', checkNotLogin, function(req, res, next) {
   var email = req.body.email;;
   var bio = req.body.bio;
   var password = req.body.password;
-  var repassword = req.body.repassword;
 
   // 校验参数
   try {
@@ -72,9 +71,6 @@ router.post('/signup', checkNotLogin, function(req, res, next) {
     }
     if (password.length < 6) {
       throw new Error('密码至少 6 个字符');
-    }
-    if (password !== repassword) {
-      throw new Error('两次输入密码不一致');
     }
   } catch (e) {
     return res.json({

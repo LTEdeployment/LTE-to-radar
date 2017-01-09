@@ -8,11 +8,16 @@ import store from './store'
 import * as filters from './filters'
 import { TOGGLE_SIDEBAR } from 'vuex-store/mutation-types'
 
-// vue-resource是Vue.js的一款插件，它可以通过XMLHttpRequest或JSONP发起请求并处理响应。
+// vue-resource 是 Vue.js 的一款插件，它可以通过 XMLHttpRequest 或 JSONP 发起请求并处理响应。
 Vue.use(Resource)
 // 进度条插件
 Vue.use(NProgress)
+
+// If your web server can't handle requests encoded as application/json,
+// you can enable the emulateJSON option.
+// This will send the request as application/x-www-form-urlencoded MIME type, as if from an normal HTML form.
 Vue.http.options.emulateJSON = true
+
 // 添加跨域支持
 Vue.http.options.credentials = true
 Vue.http.options.xhr = { withCredentials: true }

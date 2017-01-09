@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import random as r
-from math import *
+
 from Lte_Node_Generation import *
 
 user = [0] * 10000000  # 初始化所有用户

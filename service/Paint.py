@@ -2,8 +2,6 @@
 from tkinter import *
 from User_Generation import *
 
-
-
 ##将下标为num的六边形的6个顶点连在一起
 def paint_vertex(num,down_scale,plotting_scale,w):
     # 将六边形右顶点从左上角移到画布中心

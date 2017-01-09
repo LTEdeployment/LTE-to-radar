@@ -1,16 +1,16 @@
 const router = require('express').Router()
-const TaskModel = require('../../models/tasks')
+const DirectionModel = require('../../models/directions')
 const check = require('../../middlewares/apicheck')
-const cache = require('../../lib/cache')
+var multer = require('multer')
+var upload = multer({
+  dest: 'uploads/'
+})
 
-const TASK_QUEUE_NAME = 'compute_task_queue'
-
-// 根据任务 ID 查询指定的任务
-// TODO 不能找到相应的任务，原因估计在 Mongolass 上
 router.get('/id/:id', check.checkLogin, function (req, res, next) {
   let id = req.params.id
-  TaskModel
-    .getTaskById(id)
+
+  DirectionModel
+    .getDirectionById(id)
     .then(function (result) {
       res.send(JSON.stringify(result))
     })
@@ -19,12 +19,13 @@ router.get('/id/:id', check.checkLogin, function (req, res, next) {
     })
 })
 
-// 获取该用户的任务列表
+// 分页展示方向图，每页20
 router.get('/list/:page', check.checkLogin, function (req, res, next) {
   let author = req.session.user.email
   let page = req.params.page
-  TaskModel
-    .getTasks(author, 20, page)
+
+  DirectionModel
+    .getDirections(author, 20, page)
     .then(function (result) {
       res.send(JSON.stringify(result))
     })
@@ -33,26 +34,26 @@ router.get('/list/:page', check.checkLogin, function (req, res, next) {
     })
 })
 
-// 创建一个新的任务
-router.post('/create', check.checkLogin, function (req, res, next) {
+router.post('/create', check.checkLogin, upload.single('direction'), function (req, res, next) {
   let author = req.session.user.email
-  let bundle = req.body.bundle
+  let file = req.file
+  let name = req.body.name
 
   // 拼装一个 任务
-  let tempTask = {
+  let direction = {
     author,
-    bundle
+    file,
+    name
   }
 
-  TaskModel
-    .create(tempTask)
+  DirectionModel
+    .create(direction)
     .then(function (result) {
-      let task = result.ops[0]
-      return task
+      let direction = result.ops[0]
+      return direction
     })
-    .then(function (task) {
-      cache.rpush(TASK_QUEUE_NAME, JSON.stringify(task))
-      return res.send(JSON.stringify(task))
+    .then(function (direction) {
+      return res.send(JSON.stringify(direction))
     })
     .catch(function (e) {
       next(e)

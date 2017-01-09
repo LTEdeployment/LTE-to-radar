@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from math import *
 from Struct import *
-# from Interface import *
+
 
 # 初始化若干个lte基站
 lte = [0] * 150000  # 给数组赋初值

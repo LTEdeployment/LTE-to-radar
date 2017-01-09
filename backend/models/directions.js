@@ -1,15 +1,14 @@
-const Task = require('../lib/mongo').Task
-
+const Direction = require('../lib/mongo').Direction
 let pub = {}
 
-pub.create = function (task) {
-  return Task.create(task).exec()
+pub.create = function (direction) {
+  return Direction
+    .create(direction)
+    .exec()
 }
 
-// TODO need bugfix
-// 不能根据条件查找
-pub.getTaskById = function (id) {
-  return Task
+pub.getDirectionById = function (id) {
+  return Direction
     .findOne({
       _id: id
     })
@@ -21,12 +20,12 @@ pub.getTaskById = function (id) {
     .exec()
 }
 
-pub.getTasks = function (author, limit, page) {
+pub.getDirections = function (author, limit, page) {
   var query = {}
   if (author) {
     query.author = author
   }
-  return Task
+  return Direction
     .find(query)
     .skip((page - 1) * limit)
     .limit(limit)

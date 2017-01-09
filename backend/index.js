@@ -1,25 +1,24 @@
-'use strict';
-var path = require('path');
-var express = require('express');
-var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
-var flash = require('connect-flash');
-var config = require('config-lite');
-var bodyParser = require('body-parser');
-var routes = require('./routes');
-var pkg = require('./package');
-var winston = require('winston');
-var expressWinston = require('express-winston');
-
-var app = express();
+'use strict'
+var path = require('path')
+var express = require('express')
+var session = require('express-session')
+var MongoStore = require('connect-mongo')(session)
+var flash = require('connect-flash')
+var config = require('config-lite')
+var bodyParser = require('body-parser')
+var routes = require('./routes')
+var pkg = require('./package')
+var winston = require('winston')
+var expressWinston = require('express-winston')
+var app = express()
 
 // 设置模板目录
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'))
 // 设置模板引擎为 ejs
-app.set('view engine', 'ejs');
+app.set('view engine', 'ejs')
 
 // 设置静态文件目录
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')))
 // session 中间件
 app.use(session({
   name: config.session.key, // 设置 cookie 中保存 session id 的字段名称
@@ -34,50 +33,48 @@ app.use(session({
   store: new MongoStore({ // 将 session 存储到 mongodb
     url: config.mongodb // mongodb 地址
   })
-}));
+}))
 
 // support urlencoded post
 app.use(bodyParser.urlencoded({
   extended: true
-}));
+}))
 // support json post
-app.use(bodyParser.json());
+app.use(bodyParser.json())
 
 // flash 中间价，用来显示通知
-app.use(flash());
-
+app.use(flash())
 
 // 跨域支持
 app.all('/api/*', (req, res, next) => {
-  const origin = req.headers.origin;
-  if (config["white_origins"].indexOf(origin) !== -1) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With');
-    res.header('Access-Control-Allow-Credentials', true);
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS, DELETE');
+  const origin = req.headers.origin
+  if (config['white_origins'].indexOf(origin) !== -1) {
+    res.header('Access-Control-Allow-Origin', origin)
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With')
+    res.header('Access-Control-Allow-Credentials', true)
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS, DELETE')
   }
-  next();
-});
-
+  next()
+})
 
 // 设置模板全局常量
 app.locals.blog = {
   title: pkg.name,
   description: pkg.description
-};
+}
 
 // 添加模板必需的三个变量
-app.use(function(req, res, next) {
-  res.locals.user = req.session.user;
-  res.locals.success = req.flash('success').toString();
-  res.locals.error = req.flash('error').toString();
-  next();
-});
+app.use(function (req, res, next) {
+  res.locals.user = req.session.user
+  res.locals.success = req.flash('success').toString()
+  res.locals.error = req.flash('error').toString()
+  next()
+})
 
 // 正常请求的日志
 app.use(expressWinston.logger({
   transports: [
-    new(winston.transports.Console)({
+    new winston.transports.Console({
       json: true,
       colorize: true
     }),
@@ -85,10 +82,10 @@ app.use(expressWinston.logger({
       filename: 'logs/success.log'
     })
   ]
-}));
+}))
 
 // 路由
-routes(app);
+routes(app)
 
 // 错误请求的日志
 app.use(expressWinston.errorLogger({
@@ -101,19 +98,19 @@ app.use(expressWinston.errorLogger({
       filename: 'logs/error.log'
     })
   ]
-}));
+}))
 
 // error page
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.render('error', {
     error: err
-  });
-});
+  })
+})
 
 if (module.parent) {
-  module.exports = app;
+  module.exports = app
 } else {
-  app.listen(config.port, function() {
-    console.log(`${pkg.name} listening on port ${config.port}`);
-  });
+  app.listen(config.port, function () {
+    console.log(`${pkg.name} listening on port ${config.port}`)
+  })
 }

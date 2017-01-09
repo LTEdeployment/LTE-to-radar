@@ -3,7 +3,7 @@ import redis
 import time
 from Lumped_Power import *
 
-print judge_affect(1,
+print gathering2(1,
              2, 3, 4, 5, 6,
              2, 3, 4, 5, 6,
              2, 3, 4, 5, 6,

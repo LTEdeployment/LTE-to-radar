@@ -1,21 +1,21 @@
 module.exports = {
-  checkLogin: function checkLogin(req, res, next) {
+  checkLogin: function (req, res, next) {
     if (!req.session.user) {
       return res.json({
         code: -1,
-        message: "not signin yet"
-      });
+        message: 'not signin yet'
+      })
     }
-    next();
+    next()
   },
 
-  checkNotLogin: function checkNotLogin(req, res, next) {
+  checkNotLogin: function (req, res, next) {
     if (req.session.user) {
       return res.json({
         code: -1,
-        message: "already signin"
-      });
+        message: 'already signin'
+      })
     }
-    next();
+    next()
   }
-};
+}

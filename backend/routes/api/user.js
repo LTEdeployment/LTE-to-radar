@@ -67,7 +67,7 @@ router.post('/signup', checkNotLogin, function (req, res, next) {
 
   // 校验参数
   try {
-    if (!(email.length >= 1 && email.length <= 10)) {
+    if (!(email.length >= 1 && email.length <= 100)) {
       throw new Error('名字请限制在 1-10 个字符')
     }
     if (!(bio.length >= 1 && bio.length <= 30)) {
@@ -108,9 +108,9 @@ router.post('/signup', checkNotLogin, function (req, res, next) {
     })
     .catch(function (e) {
       if (e.message.match('E11000 duplicate key')) {
-        res.json({
+        return res.json({
           code: -1,
-          message: 'email has been signuped!'
+          message: '这个邮箱已经注册过了哈!'
         })
       }
       next(e)

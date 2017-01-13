@@ -20,6 +20,19 @@ pub.getDirectionById = function (id) {
     .exec()
 }
 
+pub.getDirectionByName = function (name) {
+  return Direction
+    .findOne({
+      name
+    })
+    .populate({
+      path: 'author',
+      model: 'User'
+    })
+    .addCreatedAt()
+    .exec()
+}
+
 pub.getDirections = function (author, limit, page) {
   var query = {}
   if (author) {

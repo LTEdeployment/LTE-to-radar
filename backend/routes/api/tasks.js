@@ -55,6 +55,12 @@ router.post('/create', check.checkLogin, function (req, res, next) {
       return res.send(JSON.stringify(task))
     })
     .catch(function (e) {
+      if (e.message.match('E11000 duplicate key')) {
+        return res.json({
+          code: -1,
+          message: '这个名字的方向图已经存在了哈!'
+        })
+      }
       next(e)
     })
 })

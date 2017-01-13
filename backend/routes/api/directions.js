@@ -48,14 +48,16 @@ router.post('/create', check.checkLogin, upload.single('direction'), function (r
 
   DirectionModel
     .create(direction)
-    .then(function (result) {
-      let direction = result.ops[0]
-      return direction
-    })
     .then(function (direction) {
-      return res.send(JSON.stringify(direction))
+      return res.json({code: 0, message: 'ok', data: direction})
     })
     .catch(function (e) {
+      if (e.message.match('E11000 duplicate key')) {
+        return res.json({
+          code: -1,
+          message: '这个名字的方向图已经存在了哈!'
+        })
+      }
       next(e)
     })
 })

@@ -42,4 +42,17 @@ exports.User.index({
 }).exec()
 
 exports.Task = mongolass.model('Task')
+// 任务名字全局唯一
+exports.Task.index({
+  name: 1
+}, {
+  unique: true
+}).exec()
+
 exports.Direction = mongolass.model('Direction')
+// 方向图名字全局唯一
+exports.Direction.index({
+  name: 1
+}, {
+  unique: true
+}).exec()

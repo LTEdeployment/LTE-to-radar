@@ -65,8 +65,8 @@ router.post('/signup', checkNotLogin, function (req, res, next) {
 
   // 校验参数
   try {
-    if (!(email.length >= 1 && email.length <= 10)) {
-      throw new Error('名字请限制在 1-10 个字符')
+    if (!(email.length >= 1 && email.length <= 100)) {
+      throw new Error('名字请限制在 1-100 个字符')
     }
     if (!(bio.length >= 1 && bio.length <= 30)) {
       throw new Error('个人简介请限制在 1-30 个字符')

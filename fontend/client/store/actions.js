@@ -4,9 +4,21 @@ import Vue from 'vue'
 const BASE_API_URL = 'http://computebackend.webdev.com/api/'
 // const BASE_API_URL = 'http://computebackend.xhinliang.com/api/'
 
-export const addDirection = ({commit}, payload) => {
+export const addDirection = function ({commit}, payload) {
+  console.log(JSON.stringify(payload))
+  let formData = new window.FormData()
+  formData.append('name', payload.paramName)
+  formData.append('direction', payload.paramFile)
+  formData.append('description', payload.paramDescription)
   Vue.http
-    .post(`${BASE_API_URL}user/signin`, {name: payload.name, direction: payload.direction}, {xhr: {withCredentials: true}})
+    .post(`${BASE_API_URL}directions/create`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      xhr: {
+        withCredentials: true
+      }
+    })
     .then(function (response) {
       if (response.body.code !== 0) {
         console.log('error' + JSON.stringify(response.body))
@@ -17,10 +29,19 @@ export const addDirection = ({commit}, payload) => {
     })
 }
 
-export const userLogin = ({commit}, payload) => {
+export const userLogin = ({
+  commit
+}, payload) => {
   console.log(`action login: ${payload.email} ${payload.password}`)
   Vue.http
-    .post(`${BASE_API_URL}user/signin`, {email: payload.email, password: payload.password}, {xhr: {withCredentials: true}})
+    .post(`${BASE_API_URL}user/signin`, {
+      email: payload.email,
+      password: payload.password
+    }, {
+      xhr: {
+        withCredentials: true
+      }
+    })
     .then(function (response) {
       if (response.body.code !== 0) {
         console.log(`user logined: ` + JSON.stringify(response.body))
@@ -35,7 +56,9 @@ export const userLogin = ({commit}, payload) => {
     })
 }
 
-export const userCheck = ({commit}, payload) => {
+export const userCheck = ({
+  commit
+}, payload) => {
   Vue.http
     .get(`${BASE_API_URL}user/check`)
     .then(function (response) {
@@ -53,7 +76,9 @@ export const userCheck = ({commit}, payload) => {
     })
 }
 
-export const userLogout = ({commit}, payload) => {
+export const userLogout = ({
+  commit
+}, payload) => {
   Vue.http
     .get(`${BASE_API_URL}user/signout`)
     .then(function (response) {
@@ -68,9 +93,15 @@ export const userLogout = ({commit}, payload) => {
     })
 }
 
-export const userRegister = ({commit}, payload) => {
+export const userRegister = ({
+  commit
+}, payload) => {
   Vue.http
-    .post(`${BASE_API_URL}user/signup`, {email: payload.email, password: payload.password, bio: payload.bio})
+    .post(`${BASE_API_URL}user/signup`, {
+      email: payload.email,
+      password: payload.password,
+      bio: payload.bio
+    })
     .then(function (response) {
       if (response.body.code !== 0) {
         console.log('register error' + JSON.stringify(response.body))
@@ -83,9 +114,13 @@ export const userRegister = ({commit}, payload) => {
     })
 }
 
-export const taskCreate = ({commit}, payload) => {
+export const taskCreate = ({
+  commit
+}, payload) => {
   Vue.http
-    .post(`${BASE_API_URL}tasks/create`, {bundle: payload})
+    .post(`${BASE_API_URL}tasks/create`, {
+      bundle: payload
+    })
     .then(function (response) {
       console.log(response.body)
     }, function (error) {
@@ -93,20 +128,28 @@ export const taskCreate = ({commit}, payload) => {
     })
 }
 
-export const toggleSidebar = ({ commit }, opened) => {
+export const toggleSidebar = ({
+  commit
+}, opened) => {
   commit(types.TOGGLE_SIDEBAR, opened)
 }
 
-export const toggleDevice = ({ commit }, device) => commit(types.TOGGLE_DEVICE, device)
+export const toggleDevice = ({
+  commit
+}, device) => commit(types.TOGGLE_DEVICE, device)
 
-export const expandMenu = ({ commit }, menuItem) => {
+export const expandMenu = ({
+  commit
+}, menuItem) => {
   if (menuItem) {
     menuItem.expanded = menuItem.expanded || false
     commit(types.EXPAND_MENU, menuItem)
   }
 }
 
-export const switchEffect = ({ commit }, effectItem) => {
+export const switchEffect = ({
+  commit
+}, effectItem) => {
   if (effectItem) {
     commit(types.SWITCH_EFFECT, effectItem)
   }

@@ -1,8 +1,21 @@
 import * as types from './mutation-types'
 import Vue from 'vue'
 
-// const BASE_API_URL = 'http://computebackend.webdev.com/api/'
-const BASE_API_URL = 'http://computebackend.xhinliang.com/api/'
+const BASE_API_URL = 'http://computebackend.webdev.com/api/'
+// const BASE_API_URL = 'http://computebackend.xhinliang.com/api/'
+
+export const addDirection = ({commit}, payload) => {
+  Vue.http
+    .post(`${BASE_API_URL}user/signin`, {name: payload.name, direction: payload.direction}, {xhr: {withCredentials: true}})
+    .then(function (response) {
+      if (response.body.code !== 0) {
+        console.log('error' + JSON.stringify(response.body))
+        return
+      }
+    }, function (error) {
+      console.log('error' + error)
+    })
+}
 
 export const userLogin = ({commit}, payload) => {
   console.log(`action login: ${payload.email} ${payload.password}`)

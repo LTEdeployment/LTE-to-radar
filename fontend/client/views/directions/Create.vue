@@ -50,6 +50,23 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import Message from 'vue-bulma-message'
+import Vue from 'vue'
+
+const MessageComponent = Vue.extend(Message)
+const openMessage = (propsData = {
+  title: '',
+  message: '',
+  type: '',
+  direction: '',
+  duration: 1500,
+  container: '.messages'
+}) => {
+  return new MessageComponent({
+    el: document.createElement('div'),
+    propsData
+  })
+}
 
 export default {
   components: {},
@@ -70,7 +87,7 @@ export default {
     ]),
 
     create () {
-      this.addDirection({paramName: this.name, paramFile: this.file})
+      this.addDirection({paramName: this.name, paramFile: this.file, onSuccess: this.successMessage, onFail: this.failMessage})
     },
 
     onFileChange (e) {
@@ -79,8 +96,23 @@ export default {
       if (!files.length) {
         return
       }
-      console.log('new file')
       this.file = files[0]
+    },
+
+    successMessage () {
+      openMessage({
+        title: '提示',
+        message: '操作成功',
+        type: 'success'
+      })
+    },
+
+    failMessage () {
+      openMessage({
+        title: '提示',
+        message: '操作失败',
+        type: 'warning'
+      })
     }
   },
 

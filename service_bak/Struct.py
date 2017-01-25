@@ -4,6 +4,20 @@ class Lte:
     x = 0  # 横坐标
     y = 0  # 纵坐标
 
+    vertex_x_right = 0  # 右顶点横坐标
+    vertex_x_rightup = 0  # 右上顶点横坐标
+    vertex_x_leftup = 0  # 左上顶点横坐标
+    vertex_x_left = 0  # 左顶点横坐标
+    vertex_x_leftdown = 0  # 左下顶点横坐标
+    vertex_x_rightdown = 0  # 右下顶点横坐标
+
+    vertex_y_right = 0  # 右顶点纵坐标
+    vertex_y_rightup = 0  # 右上顶点纵坐标
+    vertex_y_leftup = 0  # 左上顶点纵坐标
+    vertex_y_left = 0  # 左顶点纵坐标
+    vertex_y_leftdown = 0  # 左下顶点纵坐标
+    vertex_y_rightdown = 0  # 右下顶点纵坐标
+
     height = 0  # 高度
     trans_power = 0  # 发射功率
     frequency = 0  # 频率
@@ -12,6 +26,7 @@ class Lte:
     feederline_factor=0 # 馈线损耗
     noise_factor=0 # 噪声系数
     antenna_gain=0 # 天线增益
+
     servingusers = 0  # lte已接入用户数目
 
 
@@ -23,7 +38,6 @@ class Radar:
     feederline_factor=0 # 馈线损耗
     noise_factor=0 # 噪声系数
     antenna_gain=0 # 天线增益
-
 
 # 定义User类
 class User:

@@ -24,7 +24,7 @@ def convert_int(initial_angle):  ## initial_angle为初始角度
     return c  ## 返回整数角度
 
 
-# 由节点坐标计算节点、雷达的水平方向角（结果为角度制，-179~180）
+# 由节点坐标计算节点、雷达的水平方向角（结果为角度制）
 def calcu_x_direction_angle(x, y):  # x、y代表节点的横纵坐标
     if x > 0:
         if y >= 0:
@@ -54,7 +54,7 @@ def calcu_x_direction_angle(x, y):  # x、y代表节点的横纵坐标
     return angr, angn
 
 
-# 由节点到雷达的距离、节点高度、雷达高度计算节点、雷达的垂直方向角（结果为角度制，-90~90）
+# 由节点到雷达的距离、节点高度、雷达高度计算节点、雷达的垂直方向角（结果为角度制）
 def calcu_y_direction_angle(d, height_nodexx, height_radarxx,
                             elevation):  # d、height_node、height_radar分别代表距离、节点高度、雷达高度、雷达仰角
 

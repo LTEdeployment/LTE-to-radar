@@ -77,4 +77,3 @@ def attenuation(hr,hb,frequency,distance,environment1,environment2):#参数分�
     elif frequency>5400:
         path_loss=30.9+32.7*log10(distance)+random.gauss(0,2.9)
     return path_loss##返回衰减
-

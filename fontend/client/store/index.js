@@ -6,6 +6,7 @@ import * as actions from './actions'
 import * as getters from './getters'
 import app from './modules/app'
 import menu from './modules/menu'
+import modal from './modules/modal'
 import user from './modules/user'
 
 Vue.use(Vuex)
@@ -16,6 +17,7 @@ const store = new Vuex.Store({
   getters,
   modules: {
     app,
+    modal,
     menu,
     user
   },

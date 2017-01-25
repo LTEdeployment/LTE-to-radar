@@ -1,9 +1,23 @@
 const router = require('express').Router()
+const multer = require('multer')
+const uuidV4 = require('uuid/v4')
 const DirectionModel = require('../../models/directions')
 const check = require('../../middlewares/apicheck')
-var multer = require('multer')
-var upload = multer({
-  dest: 'uploads/'
+const cache = require('../../lib/cache')
+
+const TASK_QUEUE_NAME = 'directions_task_queue'
+
+let storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '../uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, uuidV4() + '.mat')
+  }
+})
+
+let upload = multer({
+  storage
 })
 
 router.get('/id/:id', check.checkLogin, function (req, res, next) {
@@ -38,18 +52,21 @@ router.post('/create', check.checkLogin, upload.single('direction'), function (r
   let author = req.session.user.email
   let file = req.file
   let name = req.body.name
+  let description = req.body.description
 
   // 拼装一个 任务
   let direction = {
     author,
     file,
-    name
+    name,
+    description
   }
 
   DirectionModel
     .create(direction)
-    .then(function (direction) {
-      return res.json({code: 0, message: 'ok', data: direction})
+    .then(function (directionSave) {
+      cache.rpush(TASK_QUEUE_NAME, JSON.stringify(direction))
+      return res.json({code: 0, message: 'ok', data: directionSave})
     })
     .catch(function (e) {
       if (e.message.match('E11000 duplicate key')) {
@@ -58,7 +75,7 @@ router.post('/create', check.checkLogin, upload.single('direction'), function (r
           message: '这个名字的方向图已经存在了哈!'
         })
       }
-      next(e)
+      return res.json({code: -1, message: e.message, data: null})
     })
 })
 

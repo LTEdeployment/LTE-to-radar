@@ -16,4 +16,10 @@ def resort120(x,antenna_flagx):
         d_f_copy3 = x[:][:]
     return d_f_copy3
 
-
+# 借用数字电视方向图简易改至空间站天线方向图
+def resort_satellite_dir_m(x):
+    d_f_copy = [[0 for x in range(360)] for x in range(91)]
+    for i in range(91):
+        for j in range(360):
+            d_f_copy[i][j]=x[i+90][j]  # 取数字电视方向图垂直方向角的主瓣的一半赋值给偏轴角
+    return d_f_copy

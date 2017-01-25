@@ -4,12 +4,15 @@ import Vue from 'vue'
 const BASE_API_URL = 'http://computebackend.webdev.com/api/'
 // const BASE_API_URL = 'http://computebackend.xhinliang.com/api/'
 
-export const addDirection = function ({commit}, payload) {
-  console.log(JSON.stringify(payload))
+export const addDirection = function ({
+  commit
+}, payload) {
+  // 拼装表单
   let formData = new window.FormData()
   formData.append('name', payload.paramName)
   formData.append('direction', payload.paramFile)
   formData.append('description', payload.paramDescription)
+
   Vue.http
     .post(`${BASE_API_URL}directions/create`, formData, {
       headers: {
@@ -21,10 +24,14 @@ export const addDirection = function ({commit}, payload) {
     })
     .then(function (response) {
       if (response.body.code !== 0) {
-        console.log('error' + JSON.stringify(response.body))
+        // server error
+        payload.onFail()
         return
       }
+      payload.onSuccess()
     }, function (error) {
+      // network error
+      payload.onFail()
       console.log('error' + error)
     })
 }
@@ -54,6 +61,19 @@ export const userLogin = ({
     }, function (error) {
       console.log('error' + error)
     })
+}
+
+export const showModal = ({
+  commit
+}, payload) => {
+  console.log('show modal: ' + payload.title)
+  commit(types.SHOW_MODAL, payload.title, payload.message)
+}
+
+export const dismissModal = ({
+  commit
+}, payload) => {
+  commit(types.DISMISS_MODAL)
 }
 
 export const userCheck = ({

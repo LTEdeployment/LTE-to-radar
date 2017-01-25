@@ -5,7 +5,7 @@
       <div class="tile is-parent is-4">
         <article class="tile is-child box">
           <h1 class="title">Classic</h1>
-          <a class="button is-primary is-large modal-button" @click="openModalBasic">Launch example modal</a>
+          <a class="button is-primary is-large modal-button" @click="openModal">Launch example modal</a>
         </article>
       </div>
 
@@ -28,20 +28,13 @@
 
 <script>
 import Vue from 'vue'
+import { mapActions } from 'vuex'
 import Modal from './modals/Modal'
 import ImageModal from './modals/ImageModal'
 import CardModal from './modals/CardModal'
 
-const ModalComponent = Vue.extend(Modal)
 const ImageModalComponent = Vue.extend(ImageModal)
 const CardModalComponent = Vue.extend(CardModal)
-
-const openModal = (propsData = {}) => {
-  return new ModalComponent({
-    el: document.createElement('div'),
-    propsData
-  })
-}
 
 const openImageModal = (propsData = {}) => {
   return new ImageModalComponent({
@@ -63,8 +56,12 @@ export default {
   },
 
   methods: {
-    openModalBasic () {
-      openModal()
+    ...mapActions([
+      'showModal'
+    ]),
+
+    openModal () {
+      this.showModal({title: 'fefef', message: 'fefefee'})
     },
 
     openModalImage () {

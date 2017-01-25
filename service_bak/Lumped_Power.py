@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from Gain import *
 from Radar_Generation import *
 from User_Power_Control import *
 from Direction_Map import *
@@ -159,7 +158,7 @@ def exe_main(acir_min, acir_max, acir_space, antenna_flag, lte_min_d, sR, lR, lP
                                                                             lte_feederline_factor,
                                                                             radar_feederline_factor,
                                                                             lte_NF, user_NF, radar_NF)
-    lte_direction_factor = resort120(lte_direction_factor, antenna_flag) # 如果又需要的话，对lte方向图做三扇区修正
+    lte_direction_factor = resort120(lte_direction_factor, antenna_flag) # 对lte方向图做三扇区修正
     # 干扰阈值
     threshold = -174 + 10 * log10(radar_bindwidth * 1000000) + radar1.noise_factor - 10
     # acir部分
@@ -187,3 +186,10 @@ def exe_main(acir_min, acir_max, acir_space, antenna_flag, lte_min_d, sR, lR, lP
         j += 1
     return interference_probability
 
+# 画出分布图
+def final_paint(antenna_flag, lte_min_d, sR, lR, lte_bindwidth, resource_block):
+    cell_radius, hexagon_length, legal_lte_numbers = lte_node_generation(sR, lR, antenna_flag,
+                                                                         lte_min_d)
+    single_users = acp_celluser_numbers(lte_bindwidth, resource_block)  # 根据带宽确定每个小区的用户数目
+    user_numbers = usergenerated(sR, lR, single_users, legal_lte_numbers, cell_radius)  # 返回所有用户数目，给user参数赋值
+    paint(hexagon_length, legal_lte_numbers, user_numbers)

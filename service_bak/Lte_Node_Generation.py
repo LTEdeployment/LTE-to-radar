@@ -173,12 +173,6 @@ def calcu2(n): # 输入基站数目
 
             ##计算所有点坐标：
 
-##点坐标整体乘边长：
-def magnify(n, hexagon_length):  # 输入节点数目，六边形边长
-    for a in range(0, n):
-        lte[a].x = lte[a].x * hexagon_length
-        lte[a].y = lte[a].y * hexagon_length
-
 
 # 计算n个节点的坐标
 def calcu(n,hexagon_length): # 输入节点数目、六边形边长
@@ -190,10 +184,39 @@ def calcu(n,hexagon_length): # 输入节点数目、六边形边长
     magnify(n,hexagon_length)
 
 
+##点坐标整体乘边长：
+def magnify(n,hexagon_length): # 输入节点数目，六边形边长
+    for a in range(0, n):
+        lte[a].x = lte[a].x * hexagon_length
+        lte[a].y = lte[a].y * hexagon_length
+
+
 ##获取lte基站到雷达的距离
 def acqD(n):
     for i in range(n):
         lte[i].distance = sqrt((lte[i].x) ** 2 + (lte[i].y) ** 2)
+
+
+##获取六边形的顶点坐标
+def acquire_coordinate(n,hexagon_length): # 输入节点数目、六边形边长
+    for i in range(n):
+        lte[i].vertex_x_right = lte[i].x + hexagon_length  # 赋值右顶点
+        lte[i].vertex_y_right = lte[i].y
+
+        lte[i].vertex_x_rightup = lte[i].x + hexagon_length * 0.5  # 赋值右上顶点
+        lte[i].vertex_y_rightup = lte[i].y + hexagon_length * sqrt(3) / 2
+
+        lte[i].vertex_x_leftup = lte[i].x - hexagon_length * 0.5  # 赋值左上顶点
+        lte[i].vertex_y_leftup = lte[i].y + hexagon_length * sqrt(3) / 2
+
+        lte[i].vertex_x_left = lte[i].x - hexagon_length  # 赋值左顶点
+        lte[i].vertex_y_left = lte[i].y
+
+        lte[i].vertex_x_leftdown = lte[i].x - hexagon_length * 0.5  # 赋值左下顶点
+        lte[i].vertex_y_leftdown = lte[i].y - hexagon_length * sqrt(3) / 2
+
+        lte[i].vertex_x_rightdown = lte[i].x + hexagon_length * 0.5  # 赋值右下顶点
+        lte[i].vertex_y_rightdown = lte[i].y - hexagon_length * sqrt(3) / 2
 
 
 # 筛选出符合条件的lte
@@ -227,7 +250,7 @@ def acq_cr_hl(antenna_flag,lte_min_d): # 输入天线模式、基站最近间距
 # 节点产生汇总函数
 def lte_node_generation(r1_init, r2_init,antenna_flag,lte_min_d):  # 输入两个半径，天线模式，基站最近间距
     cell_radius, hexagon_length = acq_cr_hl(antenna_flag,lte_min_d)
-    calcu(150000,hexagon_length)  # 获取150000个基站的坐标
-    acqD(150000)  # 获取150000个基站的距离
+    calcu(150000,hexagon_length)  # 事先获取2000个基站的坐标
+    acqD(150000)  # 事先获取2000个基站的距离
     legal_lte_numbers=filtrate(r1_init, r2_init)  # 筛选出符合条件的基站
     return cell_radius, hexagon_length,legal_lte_numbers # 返回小区半径，六边形边长，有效基站数目

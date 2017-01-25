@@ -12,6 +12,17 @@
 import NprogressContainer from 'vue-nprogress/src/NprogressContainer'
 import { Navbar, Sidebar, AppMain, FooterBar } from 'components/layout/'
 import { mapGetters, mapActions } from 'vuex'
+import Vue from 'vue'
+import CardModal from './views/components/modals/CardModal'
+
+const CardModalComponent = Vue.extend(CardModal)
+
+const openCardModal = (propsData = {}) => {
+  return new CardModalComponent({
+    el: document.createElement('div'),
+    propsData
+  })
+}
 
 export default {
   components: {
@@ -49,14 +60,29 @@ export default {
 
   computed: mapGetters({
     sidebar: 'sidebar',
-    user: 'user'
+    user: 'user',
+    modalData: 'modalData'
   }),
+
+  watch: {
+    modalData: function (val) {
+      console.log('on watch')
+      if (!val.dismiss) {
+        openCardModal({
+          title: 'Modal title',
+          url: this.$store.state.pkg.homepage
+        })
+        this.dismissModal()
+      }
+    }
+  },
 
   methods: {
     ...mapActions([
       'toggleDevice',
       'toggleSidebar',
-      'userCheck'
+      'userCheck',
+      'dismissModal'
     ])
   }
 }

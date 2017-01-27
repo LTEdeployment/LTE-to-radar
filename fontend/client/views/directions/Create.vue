@@ -99,11 +99,12 @@ export default {
       this.file = files[0]
     },
 
-    successMessage () {
+    successMessage (message) {
       openMessage({
         title: '提示',
-        message: '操作成功',
-        type: 'success'
+        message,
+        type: 'success',
+        showCloseButton: true
       })
     },
 
@@ -111,7 +112,8 @@ export default {
       openMessage({
         title: '提示',
         message: '操作失败',
-        type: 'warning'
+        type: 'warning',
+        showCloseButton: true
       })
     }
   },

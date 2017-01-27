@@ -32,6 +32,23 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import Message from 'vue-bulma-message'
+import Vue from 'vue'
+
+const MessageComponent = Vue.extend(Message)
+const openMessage = (propsData = {
+  title: '',
+  message: '',
+  type: '',
+  direction: '',
+  duration: 1500,
+  container: '.messages'
+}) => {
+  return new MessageComponent({
+    el: document.createElement('div'),
+    propsData
+  })
+}
 
 export default {
   components: {},
@@ -76,12 +93,30 @@ export default {
 
     login () {
       console.log(`email: ${this.email}, password: ${this.password}`)
-      this.userLogin({email: this.email, password: this.password, router: this.$router})
+      this.userLogin({email: this.email, password: this.password, router: this.$router, onSuccess: this.successMessage, onFail: this.failMessage})
     },
 
     goRegister () {
       this.$router.push('/register')
       // this.userLogout()
+    },
+
+    successMessage (message) {
+      openMessage({
+        title: '提示',
+        type: 'success',
+        message,
+        showCloseButton: true
+      })
+    },
+
+    failMessage (message) {
+      openMessage({
+        title: '提示',
+        type: 'warning',
+        message,
+        showCloseButton: true
+      })
     }
   }
 }

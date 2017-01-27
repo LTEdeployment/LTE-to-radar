@@ -25,14 +25,13 @@ export const addDirection = function ({
     .then(function (response) {
       if (response.body.code !== 0) {
         // server error
-        payload.onFail()
+        payload.onFail(response.body.message)
         return
       }
-      payload.onSuccess()
+      payload.onSuccess('成功')
     }, function (error) {
       // network error
-      payload.onFail()
-      console.log('error' + error)
+      payload.onFail('error' + error)
     })
 }
 
@@ -52,13 +51,16 @@ export const userLogin = ({
     .then(function (response) {
       if (response.body.code !== 0) {
         console.log(`user logined: ` + JSON.stringify(response.body))
+        payload.onFail('error' + response.body.message)
         return
       }
       let email = response.body.data.email
       console.log(`user logined: ${email}`)
       commit(types.LOGIN, email)
+      payload.onSuccess('成功')
       payload.router.push('/')
     }, function (error) {
+      payload.onFail('error' + error)
       console.log('error' + error)
     })
 }
@@ -125,12 +127,15 @@ export const userRegister = ({
     .then(function (response) {
       if (response.body.code !== 0) {
         console.log('register error' + JSON.stringify(response.body))
+        payload.onFail('' + response.body.message)
         return
       }
       commit(types.LOGIN, payload.email)
+      payload.onSuccess('ok')
       payload.router.push('/')
     }, function (error) {
       console.log('error' + error)
+      payload.onFail('' + error)
     })
 }
 

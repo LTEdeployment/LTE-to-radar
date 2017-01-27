@@ -11,9 +11,14 @@ export default {
 
   children: [
     {
-      name: '新建方向图',
+      name: '上传方向图',
       path: 'create',
       component: lazyLoading('directions/Create')
+    },
+    {
+      name: '已上传方向图',
+      path: 'list',
+      component: lazyLoading('directions/List')
     }
   ]
 }

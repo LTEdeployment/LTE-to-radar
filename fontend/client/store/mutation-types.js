@@ -17,3 +17,5 @@ export const LOGOUT = 'LOGOUT'
 export const SHOW_MODAL = 'SHOW_MODAL'
 
 export const DISMISS_MODAL = 'DISMISS_MODAL'
+
+export const UPDATE_DIRECTIONS = 'UPDATE_DIRECTIONS'

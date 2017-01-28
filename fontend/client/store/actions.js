@@ -98,6 +98,20 @@ export const userCheck = ({
     })
 }
 
+export const getDirectionsList = ({
+  commit
+}, payload) => {
+  let page = payload.page
+  Vue.http
+    .get(`${BASE_API_URL}directions/list/${page}`)
+    .then(function (response) {
+      console.log(response.body)
+      commit(types.UPDATE_DIRECTIONS, response.body)
+    }, function (error) {
+      console.log('error: ' + error)
+    })
+}
+
 export const userLogout = ({
   commit
 }, payload) => {

@@ -3,8 +3,8 @@
     <div class="tile is-ancestor" v-for="(item, index) in directions.directions">
       <div class="tile is-parent is-8">
         <article class="tile is-child box">
-          <h4 class="title">方向图细节</h4>
-          <chart :type="'line'" :data="seriesData[index]" :options="options"></chart>
+          <h4 class="title"> {{ item.name }} </h4>
+          <chart :type="'line'" :data="seriesData(item)" :options="options"></chart>
         </article>
       </div>
       <div class="tile is-parent is-4">
@@ -50,30 +50,8 @@ export default {
 
     per () {
       return this.value + ''
-    },
-
-    seriesData () {
-      let list = []
-      for (var j = 0; j < this.directions.directions.length; j++) {
-        let data = {
-          labels: [],
-          datasets: [{
-            data: [],
-            label: 'hehe',
-            borderColor: this.backgroundColor.replace(/1\)$/, '.5)'),
-            pointBackgroundColor: this.backgroundColor,
-            backgroundColor: this.backgroundColor.replace(/1\)$/, '.5)')
-          }],
-          per: this.random(1, 361)
-        }
-        for (var i = 0; i <= 181; i++) {
-          data.labels.push(' ')
-          data.datasets[0].data.push(this.random(30, 140))
-        }
-        list.push(data)
-      }
-      return list
     }
+
   },
 
   mounted () {
@@ -103,8 +81,21 @@ export default {
       this.value = Number(index)
     },
 
-    random (min, max) {
-      return Math.round(Math.random() * (max - min) + min)
+    seriesData (item) {
+      if (!item || !item.data) {
+        return {}
+      }
+      let data = {
+        labels: [],
+        datasets: [{
+          data: item.data[170],
+          label: '数据'
+        }]
+      }
+      for (var i = 0; i <= item.data[0].length; i++) {
+        data.labels.push(i + '')
+      }
+      return data
     }
   }
 }

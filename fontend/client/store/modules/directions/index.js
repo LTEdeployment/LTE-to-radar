@@ -7,7 +7,6 @@ const state = {
 const mutations = {
   [types.UPDATE_DIRECTIONS] (state, directions) {
     state.directions = JSON.parse(directions)
-    console.log(JSON.stringify(directions))
   }
 }
 

@@ -59,7 +59,8 @@ router.post('/create', check.checkLogin, upload.single('direction'), function (r
     author,
     file,
     name,
-    description
+    description,
+    data: []
   }
 
   DirectionModel

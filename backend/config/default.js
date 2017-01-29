@@ -10,7 +10,7 @@ module.exports = {
     'http://compute.xhinliang.com',
     'http://compute.webdev.com'
   ],
-  mongodb: 'mongodb://localhost:27017/compute_backend_test',
+  mongodb: 'mongodb://localhost:27017/compute_backend_test1',
   redisPort: 6379,
   redisHost: '127.0.0.1'
 }

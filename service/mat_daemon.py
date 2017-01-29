@@ -19,11 +19,13 @@ def read_mat(file_path):
     return 0
 
 def handle_task(directions_task):
-    log_print(directions_task)
     file_path = '../uploads/' + directions_task['file']['filename']
     directions = read_mat(file_path)
     collections = mongoClient[mongo_db]['directions']
-    collections.insert(directions)
+    direction = collections.find_one({'name': directions_task['name']})
+    direction['data'] = directions.tolist()
+    collections.save(direction)
+    log_print('direction update: ' + directions_task['name'])
 
 def log_print(message):
     if (DEBUG_ENV):
@@ -36,4 +38,5 @@ while(True):
         time.sleep(EMPTY_QUEUE_SLEEP)
         continue
     handle_task(json.loads(task))
+    time.sleep(EMPTY_QUEUE_SLEEP)
 

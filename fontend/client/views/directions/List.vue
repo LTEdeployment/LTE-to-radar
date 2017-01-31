@@ -3,7 +3,7 @@
     <div class="tile is-ancestor" v-for="(item, index) in directions.directions">
       <div class="tile is-parent is-8">
         <article class="tile is-child box">
-          <h4 class="title"> {{ item.name }} </h4>
+          <h4 class="title"> {{ getTitle(item) }} </h4>
           <chart :type="'line'" :data="seriesData(item)" :options="options"></chart>
         </article>
       </div>
@@ -77,24 +77,32 @@ export default {
       'getDirectionsList'
     ]),
 
+    getTitle (item) {
+      if (!item.is_resolved) {
+        return item.name + '（未解析）'
+      }
+      return item.name
+    },
+
     update (index) {
       this.value = Number(index)
     },
 
     seriesData (item) {
-      if (!item || !item.data) {
-        return {}
-      }
       let data = {
         labels: [],
         datasets: [{
-          data: item.data[170],
+          data: [],
           label: '数据'
         }]
       }
-      for (var i = 0; i <= item.data[0].length; i++) {
+      for (let i = 0; i <= 360; i++) {
         data.labels.push(i + '')
       }
+      if (!item || !item.data) {
+        return data
+      }
+      data.datasets[0].data = item.data[80]
       return data
     }
   }

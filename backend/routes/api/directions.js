@@ -4,12 +4,11 @@ const uuidV4 = require('uuid/v4')
 const DirectionModel = require('../../models/directions')
 const check = require('../../middlewares/apicheck')
 const cache = require('../../lib/cache')
-
-const TASK_QUEUE_NAME = 'directions_task_queue'
+const config = require('config-lite')
 
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '../uploads/')
+    cb(null, './uploads/')
   },
   filename: function (req, file, cb) {
     cb(null, uuidV4() + '.mat')
@@ -39,7 +38,7 @@ router.get('/list/:page', check.checkLogin, function (req, res, next) {
   let page = req.params.page
 
   DirectionModel
-    .getDirections(author, 20, page)
+    .getDirections(author, 10, page)
     .then(function (result) {
       res.send(JSON.stringify(result))
     })
@@ -59,14 +58,13 @@ router.post('/create', check.checkLogin, upload.single('direction'), function (r
     author,
     file,
     name,
-    description,
-    data: []
+    description
   }
 
   DirectionModel
     .create(direction)
     .then(function (directionSave) {
-      cache.rpush(TASK_QUEUE_NAME, JSON.stringify(direction))
+      cache.rpush(config.redis_mat_directions_queue, JSON.stringify(direction))
       return res.json({code: 0, message: 'ok', data: directionSave})
     })
     .catch(function (e) {

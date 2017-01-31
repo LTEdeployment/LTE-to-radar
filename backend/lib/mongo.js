@@ -4,7 +4,7 @@ var mongolass = new Mongolass()
 var objectIdToTimestamp = require('objectid-to-timestamp')
 var moment = require('moment')
 
-mongolass.connect(config.mongodb)
+mongolass.connect(config.mongo_uri + '/' + config.mongo_db)
 
 // 根据 id 生成创建时间 created_at
 mongolass.plugin('addCreatedAt', {

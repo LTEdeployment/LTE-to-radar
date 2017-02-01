@@ -53,4 +53,14 @@ pub.getDirections = function (author, limit, page) {
     .exec()
 }
 
+pub.getAmount = function (author) {
+  var query = {}
+  if (author) {
+    query.author = author
+  }
+  return Direction
+    .count(query)
+    .exec()
+}
+
 module.exports = pub

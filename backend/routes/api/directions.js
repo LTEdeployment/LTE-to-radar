@@ -47,6 +47,19 @@ router.get('/list/:page', check.checkLogin, function (req, res, next) {
     })
 })
 
+router.get('/amount', check.checkLogin, function (req, res, next) {
+  let author = req.session.user.email
+
+  DirectionModel
+    .getAmount(author)
+    .then(function (amount) {
+      res.json({code: 0, message: 'ok', data: amount})
+    })
+    .catch(function (e) {
+      res.json({code: -1, message: e.message, data: null})
+    })
+})
+
 router.post('/create', check.checkLogin, upload.single('direction'), function (req, res, next) {
   let author = req.session.user.email
   let file = req.file

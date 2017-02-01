@@ -1,5 +1,8 @@
 <template>
   <div>
+    <tabs type="toggle">
+      <tab-pane :label="item" v-for="item in pages"></tab-pane>
+    </tabs>
     <div class="tile is-ancestor" v-for="(item, index) in directions.directions">
       <div class="tile is-parent is-8">
         <article class="tile is-child box">
@@ -33,6 +36,7 @@ import { mapGetters, mapActions } from 'vuex'
 import Chart from 'vue-bulma-chartjs'
 import Tooltip from 'vue-bulma-tooltip'
 import Slider from 'vue-bulma-slider'
+import { Tabs, TabPane } from 'vue-bulma-tabs'
 
 export default {
   components: {
@@ -40,7 +44,9 @@ export default {
     CollapseItem,
     Chart,
     Tooltip,
-    Slider
+    Slider,
+    Tabs,
+    TabPane
   },
 
   computed: {
@@ -50,17 +56,39 @@ export default {
 
     per () {
       return this.value + ''
-    }
+    },
 
+    pages () {
+      let pageAmount = this.amount / 10
+      if (this.amount % 10) {
+        pageAmount += 1
+      }
+      let pages = []
+      for (let i = 1; i <= pageAmount; i++) {
+        pages.push(i)
+      }
+      return pages
+    }
   },
 
   mounted () {
     this.getDirectionsList({ page: this.page })
+    this.$http.get('http://computebackend.webdev.com/api/directions/amount')
+      .then(function (response) {
+        if (response.body.code !== 0) {
+          console.log('error' + response.body.message)
+          return
+        }
+        this.amount = response.body.data
+      }, function (error) {
+        console.log('error' + error)
+      })
   },
 
   data () {
     return {
       page: 1,
+      amount: 0,
       value: 1,
       options: {
         segmentShowStroke: false,

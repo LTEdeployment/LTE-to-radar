@@ -1,8 +1,5 @@
 <template>
   <div>
-    <tabs type="toggle">
-      <tab-pane :label="item" v-for="item in pages"></tab-pane>
-    </tabs>
     <div class="tile is-ancestor" v-for="(item, index) in directions.directions">
       <div class="tile is-parent is-8">
         <article class="tile is-child box">
@@ -27,6 +24,9 @@
         </article>
       </div>
     </div>
+    <tabs type="toggle" v-on:setTabsIndex="setPage">
+      <tab-pane :label="item + ''" v-for="item in pages"></tab-pane>
+    </tabs>
   </div>
 </template>
 
@@ -36,7 +36,7 @@ import { mapGetters, mapActions } from 'vuex'
 import Chart from 'vue-bulma-chartjs'
 import Tooltip from 'vue-bulma-tooltip'
 import Slider from 'vue-bulma-slider'
-import { Tabs, TabPane } from 'vue-bulma-tabs'
+import { Tabs, TabPane } from '../../components/pagination'
 
 export default {
   components: {
@@ -114,6 +114,11 @@ export default {
 
     update (index) {
       this.value = Number(index)
+    },
+
+    setPage (page) {
+      this.page = page
+      console.log(`page: ${page}`)
     },
 
     seriesData (item) {

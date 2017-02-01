@@ -53,7 +53,7 @@ router.get('/amount', check.checkLogin, function (req, res, next) {
   DirectionModel
     .getAmount(author)
     .then(function (amount) {
-      res.json({code: 0, message: 'ok', data: amount})
+      res.json({code: 0, message: 'ok', data: amount + 300})
     })
     .catch(function (e) {
       res.json({code: -1, message: e.message, data: null})

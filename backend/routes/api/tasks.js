@@ -2,8 +2,7 @@ const router = require('express').Router()
 const TaskModel = require('../../models/tasks')
 const check = require('../../middlewares/apicheck')
 const cache = require('../../lib/cache')
-
-const TASK_QUEUE_NAME = 'compute_task_queue'
+const config = require('config-lite')
 
 // 根据任务 ID 查询指定的任务
 // TODO 不能找到相应的任务，原因估计在 Mongolass 上
@@ -37,11 +36,15 @@ router.get('/list/:page', check.checkLogin, function (req, res, next) {
 router.post('/create', check.checkLogin, function (req, res, next) {
   let author = req.session.user.email
   let bundle = req.body.bundle
+  let name = req.body.name
+  let description = req.body.description
 
   // 拼装一个 任务
   let tempTask = {
     author,
-    bundle
+    bundle,
+    name,
+    description
   }
 
   TaskModel
@@ -51,14 +54,18 @@ router.post('/create', check.checkLogin, function (req, res, next) {
       return task
     })
     .then(function (task) {
-      cache.rpush(TASK_QUEUE_NAME, JSON.stringify(task))
-      return res.send(JSON.stringify(task))
+      cache.rpush(config.redis_task_lte_queue, JSON.stringify(task))
+      return res.json({
+        code: 0,
+        message: 'ok',
+        data: task
+      })
     })
     .catch(function (e) {
       if (e.message.match('E11000 duplicate key')) {
         return res.json({
           code: -1,
-          message: '这个名字的方向图已经存在了哈!'
+          message: '这个名字的计算任务已经存在了哈!'
         })
       }
       next(e)

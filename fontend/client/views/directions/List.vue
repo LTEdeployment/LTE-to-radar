@@ -36,6 +36,7 @@ import { mapGetters, mapActions } from 'vuex'
 import Chart from 'vue-bulma-chartjs'
 import Tooltip from 'vue-bulma-tooltip'
 import Slider from 'vue-bulma-slider'
+// 使用 vue-bulma-tabs 作为分页
 import { Tabs, TabPane } from '../../components/pagination'
 
 export default {
@@ -117,8 +118,12 @@ export default {
     },
 
     setPage (page) {
+      if (this.page === page) {
+        return
+      }
       this.page = page
       console.log(`page: ${page}`)
+      this.getDirectionsList({ page: this.page })
     },
 
     seriesData (item) {

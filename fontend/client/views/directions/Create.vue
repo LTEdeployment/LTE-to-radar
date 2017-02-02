@@ -108,10 +108,10 @@ export default {
       })
     },
 
-    failMessage () {
+    failMessage (message) {
       openMessage({
         title: '提示',
-        message: '操作失败',
+        message,
         type: 'warning',
         showCloseButton: true
       })

@@ -13,5 +13,6 @@
   "mongo_uri": "mongodb://localhost:27017",
   "mongo_db": "compute_backend_test1",
   "redis_mat_directions_queue": "directions_task_queue",
+  "redis_task_lte_queue": "redis_task_lte_queue",
   "queue_empty_sleep_time": 5
 }

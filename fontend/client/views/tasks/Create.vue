@@ -114,13 +114,16 @@
         <div class="block">
           <div class="control is-horizontal">
             <div class="control-label">
-              <label class="label">邮箱</label>
+              <label class="label">任务名</label>
             </div>
             <div class="control is-grouped">
               <p class="control is-expanded">
-                <input class="input" type="text" placeholder="邮箱">
+                <input class="input" type="text" v-model="name" placeholder="任务名">
               </p>
             </div>
+          </div>
+          <div class="control is-horizontal">
+            <multiselect v-model="value" :options="options" :searchable="false" :close-on-select="false" :show-labels="false" placeholder="Pick a value"></multiselect>
           </div>
           <div class="control is-horizontal">
             <div class="control-label">
@@ -137,10 +140,10 @@
           </div>
           <div class="control is-horizontal">
             <div class="control-label">
-              <label class="label">备注</label>
+              <label class="label">描述</label>
             </div>
             <div class="control">
-              <textarea class="textarea"></textarea>
+              <textarea class="textarea" v-model="description"></textarea>
             </div>
           </div>
           <div class="control is-horizontal">
@@ -160,9 +163,11 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import Multiselect from 'vue-multiselect'
+import configJson from '../../../config/api.json'
 
 export default {
-  components: {},
+  components: { Multiselect },
 
   computed: mapGetters({
     user: 'user'
@@ -180,13 +185,29 @@ export default {
     ]),
 
     create () {
-      console.log(`task create!`)
-      this.taskCreate({paramLte: this.paramLte, paramUser: this.paramUser, paramRadar: this.paramRadar})
+      this.$http.post(`${configJson['base_url']}api/tasks/create`, {
+        bundle: {
+          lte: this.paramLte,
+          user: this.paramUser,
+          radar: this.paramRadar
+        },
+        name: this.name,
+        description: this.description
+      })
+      .then(function (response) {
+        console.log(response.body)
+      }, function (err) {
+        console.log('error: ' + JSON.stringify(err))
+      })
     }
   },
 
   data () {
     return {
+      value: null,
+      options: ['list', 'of', 'options'],
+      name: '',
+      description: '',
       paramLte: {
         input_max_emit_power: 0,
         input_max_emit_frequency: 0,

@@ -123,7 +123,28 @@
             </div>
           </div>
           <div class="control is-horizontal">
-            <multiselect v-model="value" :options="options" :searchable="false" :close-on-select="false" :show-labels="false" placeholder="Pick a value"></multiselect>
+            <div class="control-label">
+              <label class="label">基站方向图</label>
+            </div>
+            <div class="control">
+              <multiselect v-model="lteDirection" :options="directionOptions" :custom-label="nameWithLang" placeholder="Select one" label="name" track-by="name"></multiselect>
+            </div>
+          </div>
+          <div class="control is-horizontal">
+            <div class="control-label">
+              <label class="label">用户方向图</label>
+            </div>
+            <div class="control">
+              <multiselect v-model="userDirection" :options="directionOptions" :custom-label="nameWithLang" placeholder="Select one" label="name" track-by="name"></multiselect>
+            </div>
+          </div>
+          <div class="control is-horizontal">
+            <div class="control-label">
+              <label class="label">雷达方向图</label>
+            </div>
+            <div class="control">
+              <multiselect v-model="radarDirection" :options="directionOptions" :custom-label="nameWithLang" placeholder="Select one" label="name" track-by="name"></multiselect>
+            </div>
           </div>
           <div class="control is-horizontal">
             <div class="control-label">
@@ -177,6 +198,16 @@ export default {
     if (!this.user.email) {
       this.$router.push('/login')
     }
+    this.$http.get(`${configJson['base_url']}api/directions/all`)
+      .then(function (response) {
+        if (response.body && response.body.code === 0) {
+          this.directionOptions = response.body.data
+          return
+        }
+        console.log('error: ' + response.body.message)
+      }, function (err) {
+        console.log('error: ' + JSON.stringify(err))
+      })
   },
 
   methods: {
@@ -199,13 +230,21 @@ export default {
       }, function (err) {
         console.log('error: ' + JSON.stringify(err))
       })
+    },
+
+    nameWithLang ({ name, description }) {
+      return `${name} — [${description}]`
     }
   },
 
   data () {
     return {
-      value: null,
-      options: ['list', 'of', 'options'],
+      lteDirection: { name: '未选择', description: '未选择' },
+      radarDirection: { name: '未选择', description: '未选择' },
+      userDirection: { name: '未选择', description: '未选择' },
+      directionOptions: [
+        { name: 'nothing', language: 'nothing' }
+      ],
       name: '',
       description: '',
       paramLte: {

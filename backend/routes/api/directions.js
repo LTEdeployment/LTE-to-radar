@@ -47,6 +47,19 @@ router.get('/list/:page', check.checkLogin, function (req, res, next) {
     })
 })
 
+router.get('/all', check.checkLogin, function (req, res, next) {
+  let author = req.session.user.email
+
+  DirectionModel
+    .getAllNames(author)
+    .then(function (result) {
+      res.json({code: 0, message: 'ok', data: result})
+    })
+    .catch(function (e) {
+      res.json({code: -1, message: 'bu ok', data: null})
+    })
+})
+
 router.get('/amount', check.checkLogin, function (req, res, next) {
   let author = req.session.user.email
 

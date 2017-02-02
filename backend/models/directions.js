@@ -53,6 +53,23 @@ pub.getDirections = function (author, limit, page) {
     .exec()
 }
 
+pub.getAllNames = function (author) {
+  var query = {}
+  if (author) {
+    query.author = author
+  }
+  return Direction
+    .find(query)
+    .fields({
+      name: 1,
+      description: 1
+    })
+    .sort({
+      _id: -1
+    })
+    .exec()
+}
+
 pub.getAmount = function (author) {
   var query = {}
   if (author) {

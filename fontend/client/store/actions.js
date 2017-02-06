@@ -84,7 +84,6 @@ export const userCheck = ({
   Vue.http
     .get(`${BASE_API_URL}user/check`)
     .then(function (response) {
-      console.log(response.body)
       if (response.body.code !== 0) {
         payload.router.push('/login')
         return
@@ -92,7 +91,6 @@ export const userCheck = ({
       let email = response.body.data.email
       console.log(`user checked: ${email}`)
       commit(types.LOGIN, email)
-      payload.router.push('/')
     }, function (error) {
       console.log('error' + error)
     })

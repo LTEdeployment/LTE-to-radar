@@ -5,62 +5,58 @@
       <article class="tile is-child box">
         <h1 class="title">LTE 参数</h1>
         <div class="block">
-          <label class="label">最大发射功率</label>
+          <label class="label">系统带宽</label>
           <p class="control">
-            <input class="input" v-model="paramLte.input_max_emit_power" type="text" placeholder="Text input">
-          </p>
-          <label class="label">发射频率</label>
-          <p class="control">
-            <input class="input" v-model="paramLte.input_max_emit_frequency" type="text" placeholder="Text input" value="">
-          </p>
-          <label class="label">天线高度</label>
-          <p class="control">
-            <input class="input" v-model="paramLte.input_antenna_height" type="text" placeholder="Text input" value="">
+            <input class="input" v-model="paramLte.lte_bindwidth" type="text" placeholder="Text input" value="">
           </p>
           <label class="label">天线增益</label>
           <p class="control">
-            <input class="input" v-model="paramLte.input_antenna_gain" type="text" placeholder="Text input" value="">
+            <input class="input" v-model="paramLte.lte_antenna_gain" type="text" placeholder="Text input" value="">
           </p>
-          <label class="label">天线效率</label>
+          <label class="label">天线损耗因子</label>
           <p class="control">
-            <input class="input" v-model="paramLte.input_antenna_ratio" type="text" placeholder="Text input" value="">
-          </p>
-          <label class="label">噪声系数</label>
-          <p class="control">
-            <input class="input" v-model="paramLte.input_noise_figure" type="text" placeholder="Text input" value="">
+            <input class="input" v-model="paramLte.lte_antenna_loss_factor" type="text" placeholder="Text input" value="">
           </p>
           <label class="label">馈线损耗</label>
           <p class="control">
-            <input class="input" v-model="paramLte.input_feeder_loss" type="text" placeholder="Text input" value="">
+            <input class="input" v-model="paramLte.lte_feederline_factor" type="text" placeholder="Text input" value="">
           </p>
-          <label class="label">基站带宽</label>
+          <label class="label">噪声系数</label>
           <p class="control">
-            <input class="input" v-model="paramLte.input_station_wide" type="text" placeholder="Text input" value="">
+            <input class="input" v-model="paramLte.lte_noise_figure" type="text" placeholder="Text input" value="">
           </p>
-          <h3 class="title">用户参数</h3>
-          <label class="label">最大发射功率</label>
+          <label class="label">发射功率</label>
           <p class="control">
-            <input class="input" v-model="paramUser.user_max_emit_power" type="text" placeholder="Text input" value="">
+            <input class="input" v-model="paramLte.lte_power" type="text" placeholder="Text input">
+          </p>
+          <label class="label">天线高度</label>
+          <p class="control">
+            <input class="input" v-model="paramLte.lte_antenna_height" type="text" placeholder="Text input" value="">
           </p>
           <label class="label">发射频率</label>
           <p class="control">
-            <input class="input" v-model="paramUser.user_max_emit_frequency" type="text" placeholder="Text input" value="">
+            <input class="input" v-model="paramLte.lte_frequency" type="text" placeholder="Text input" value="">
+          </p>
+          <h3 class="title">用户参数</h3>
+          <label class="label">天线增益</label>
+          <p class="control">
+            <input class="input" v-model="paramUser.user_antenna_gain" type="text" placeholder="Text input" value="">
+          </p>
+          <label class="label">天线损耗因子</label>
+          <p class="control">
+            <input class="input" v-model="paramUser.user_loss_factor" type="text" placeholder="Text input" value="">
+          </p>
+          <label class="label">噪声系数</label>
+          <p class="control">
+            <input class="input" v-model="paramUser.user_noise_figure" type="text" placeholder="Text input" value="">
           </p>
           <label class="label">天线高度</label>
           <p class="control">
             <input class="input" v-model="paramUser.user_antenna_height" type="text" placeholder="Text input" value="">
           </p>
-          <label class="label">天线增益</label>
+          <label class="label">发射频率</label>
           <p class="control">
-            <input class="input" v-model="paramUser.user_antenna_gain" type="text" placeholder="Text input" value="">
-          </p>
-          <label class="label">天线效率</label>
-          <p class="control">
-            <input class="input" v-model="paramUser.user_antenna_ratio" type="text" placeholder="Text input" value="">
-          </p>
-          <label class="label">噪声系数</label>
-          <p class="control">
-            <input class="input" v-model="paramUser.user_noise_figure" type="text" placeholder="Text input" value="">
+            <input class="input" v-model="paramUser.user_frequency" type="text" placeholder="Text input" value="">
           </p>
         </div>
       </article>
@@ -70,42 +66,177 @@
       <article class="tile is-child box">
         <h1 class="title">Radar 参数</h1>
         <div class="block">
-          <label class="label">天线高度</label>
-          <p class="control">
-            <input class="input" v-model="paramRadar.radar_antenna_height" type="text" placeholder="Text input">
-          </p>
           <label class="label">天线增益</label>
           <p class="control">
             <input class="input" v-model="paramRadar.radar_antenna_gain" type="text" placeholder="Text input" value="">
           </p>
-          <label class="label">天线效率</label>
+          <label class="label">天线损耗因子</label>
           <p class="control">
-            <input class="input" v-model="paramRadar.radar_antenna_ratio" type="text" placeholder="Text input" value="">
+            <input class="input" v-model="paramRadar.radar_loss_factor" type="text" placeholder="Text input" value="">
           </p>
-          <label class="label">噪声系数</label>
+          <label class="label">雷达带宽</label>
           <p class="control">
-            <input class="input" v-model="paramRadar.radar_noise_figure" type="text" placeholder="Text input" value="">
-          </p>
-          <label class="label">馈线损耗</label>
-          <p class="control">
-            <input class="input" v-model="paramRadar.radar_feeder_loss" type="text" placeholder="Text input" value="">
+            <input class="input" v-model="paramRadar.radar_bindwidth" type="text" placeholder="Text input" value="">
           </p>
           <label class="label">天线仰角</label>
           <p class="control">
             <input class="input" v-model="paramRadar.radar_antenna_tilt" type="text" placeholder="Text input" value="">
           </p>
-          <label class="label">干扰阀值</label>
+          <label class="label">馈线损耗</label>
           <p class="control">
-            <input class="input" v-model="paramRadar.radar_interference_threshold" type="text" placeholder="Text input" value="">
+            <input class="input" v-model="paramRadar.radar_feeder_loss" type="text" placeholder="Text input" value="">
           </p>
-          <label class="label">雷达带宽</label>
+          <label class="label">噪声系数</label>
           <p class="control">
-            <input class="input" v-model="paramRadar.radar_wide" type="text" placeholder="Text input" value="">
+            <input class="input" v-model="paramRadar.radar_noise_figure" type="text" placeholder="Text input" value="">
+          </p>
+          <label class="label">天线高度</label>
+          <p class="control">
+            <input class="input" v-model="paramRadar.radar_antenna_height" type="text" placeholder="Text input">
           </p>
         </div>
       </article>
     </div>
   </div>
+
+  <div class="tile is-ancestor">
+    <div class="tile is-parent">
+      <article class="tile is-child box">
+        <h1 class="title">公共参数</h1>
+        <div class="block">
+          <div class="control is-horizontal">
+            <div class="control-label">
+              <label class="label">ACIR最小值</label>
+            </div>
+            <div class="control is-grouped">
+              <p class="control is-expanded">
+                <input class="input" type="text" v-model="paramPublic.acir_min" placeholder="ACIR最小值">
+              </p>
+            </div>
+          </div>
+          <div class="control is-horizontal">
+            <div class="control-label">
+              <label class="label">ACIR最大值</label>
+            </div>
+            <div class="control is-grouped">
+              <p class="control is-expanded">
+                <input class="input" type="text" v-model="paramPublic.acir_max" placeholder="ACIR最大值">
+              </p>
+            </div>
+          </div>
+          <div class="control is-horizontal">
+            <div class="control-label">
+              <label class="label">ACIR步长</label>
+            </div>
+            <div class="control is-grouped">
+              <p class="control is-expanded">
+                <input class="input" type="text" v-model="paramPublic.acir_space" placeholder="ACIR步长">
+              </p>
+            </div>
+          </div>
+          <div class="control is-horizontal">
+            <div class="control-label">
+              <label class="label">基站间最近间距</label>
+            </div>
+            <div class="control is-grouped">
+              <p class="control is-expanded">
+                <input class="input" type="text" v-model="paramPublic.lte_min_d" placeholder="基站间最近间距">
+              </p>
+            </div>
+          </div>
+          <div class="control is-horizontal">
+            <div class="control-label">
+              <label class="label">隔离距离</label>
+            </div>
+            <div class="control is-grouped">
+              <p class="control is-expanded">
+                <input class="input" type="text" v-model="paramPublic.sR" placeholder="隔离距离">
+              </p>
+            </div>
+          </div>
+          <div class="control is-horizontal">
+            <div class="control-label">
+              <label class="label">仿真区域半径</label>
+            </div>
+            <div class="control is-grouped">
+              <p class="control is-expanded">
+                <input class="input" type="text" v-model="paramPublic.lR" placeholder="仿真区域半径">
+              </p>
+            </div>
+          </div>
+          <div class="control is-horizontal">
+            <div class="control-label">
+              <label class="label">每个下行用户占用的资源块数</label>
+            </div>
+            <div class="control is-grouped">
+              <p class="control is-expanded">
+                <input class="input" type="text" v-model="paramPublic.resource_block" placeholder="每个下行用户占用的资源块数">
+              </p>
+            </div>
+          </div>
+          <div class="control is-horizontal">
+            <div class="control-label">
+              <label class="label">路径损耗补偿因子</label>
+            </div>
+            <div class="control is-grouped">
+              <p class="control is-expanded">
+                <input class="input" type="text" v-model="paramPublic.compensation_factor" placeholder="路径损耗补偿因子">
+              </p>
+            </div>
+          </div>
+          <div class="control is-horizontal">
+            <div class="control-label">
+              <label class="label">USER 最大发射功率</label>
+            </div>
+            <div class="control is-grouped">
+              <p class="control is-expanded">
+                <input class="input" type="text" v-model="paramPublic.transpmax" placeholder="USER 最大发射功率">
+              </p>
+            </div>
+          </div>
+          <div class="control is-horizontal">
+            <div class="control-label">
+              <label class="label">是否采用三扇区</label>
+            </div>
+            <div class="control">
+              <multiselect v-model="paramPublic.antenna_flag" :options="getOptionLabels('antenna_flag')" :allow-empty="false" ></multiselect>
+            </div>
+          </div>
+          <div class="control is-horizontal">
+            <div class="control-label">
+              <label class="label">仿真场景规模</label>
+            </div>
+            <div class="control">
+              <multiselect v-model="paramPublic.environment1" :options="getOptionLabels('environment1')" :allow-empty="false" ></multiselect>
+            </div>
+          </div>
+          <div class="control is-horizontal">
+            <div class="control-label">
+              <label class="label">具体场景</label>
+            </div>
+            <div class="control">
+              <multiselect v-model="paramPublic.environment2" :options="getOptionLabels('environment2')" :allow-empty="false" ></multiselect>
+            </div>
+          </div>
+          <div class="control is-horizontal">
+            <div class="control-label">
+              <label class="label">链路方向</label>
+            </div>
+            <div class="control">
+              <multiselect v-model="paramPublic.branch" :options="getOptionLabels('branch')" :allow-empty="false" ></multiselect>
+            </div>
+          </div>
+          <div class="control is-horizontal">
+            <div class="control-label">
+              <label class="label">干扰源数</label>
+            </div>
+            <div class="control">
+              <multiselect v-model="paramPublic.uti_or_multi" :options="getOptionLabels('uti_or_multi')" :allow-empty="false" ></multiselect>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
 
   <div class="tile is-ancestor">
     <div class="tile is-parent">
@@ -127,7 +258,7 @@
               <label class="label">基站方向图</label>
             </div>
             <div class="control">
-              <multiselect v-model="lteDirection" :options="directionOptions" :custom-label="nameWithLang" placeholder="Select one" label="name" track-by="name"></multiselect>
+              <multiselect v-model="lteDirection" :options="directionOptions" :custom-label="directionLabel" placeholder="Select one" label="name" track-by="name"></multiselect>
             </div>
           </div>
           <div class="control is-horizontal">
@@ -135,7 +266,7 @@
               <label class="label">用户方向图</label>
             </div>
             <div class="control">
-              <multiselect v-model="userDirection" :options="directionOptions" :custom-label="nameWithLang" placeholder="Select one" label="name" track-by="name"></multiselect>
+              <multiselect v-model="userDirection" :options="directionOptions" :custom-label="directionLabel" placeholder="Select one" label="name" track-by="name"></multiselect>
             </div>
           </div>
           <div class="control is-horizontal">
@@ -143,7 +274,7 @@
               <label class="label">雷达方向图</label>
             </div>
             <div class="control">
-              <multiselect v-model="radarDirection" :options="directionOptions" :custom-label="nameWithLang" placeholder="Select one" label="name" track-by="name"></multiselect>
+              <multiselect v-model="radarDirection" :options="directionOptions" :custom-label="directionLabel" placeholder="Select one" label="name" track-by="name"></multiselect>
             </div>
           </div>
           <div class="control is-horizontal">
@@ -216,12 +347,29 @@ export default {
     ]),
 
     create () {
+      let pub = {}
+      for (let key in this.paramPublic) {
+        if (!this.paramPublic.hasOwnProperty(key)) {
+          continue
+        }
+        if (Array.isArray(this.options[key])) {
+          pub[key] = this.paramPublic[key] !== null ? this.getOptionIndex(key, this.paramPublic[key]) : 1
+          continue
+        }
+        pub[key] = this.paramPublic[key]
+      }
+      let bundle = {
+        lte: this.paramLte,
+        user: this.paramUser,
+        radar: this.paramRadar,
+        pub,
+        lteDirection: this.lteDirection.name,
+        radarDirection: this.radarDirection.name,
+        userDirection: this.userDirection.name
+      }
+      console.log(bundle)
       this.$http.post(`${configJson['base_url']}api/tasks/create`, {
-        bundle: {
-          lte: this.paramLte,
-          user: this.paramUser,
-          radar: this.paramRadar
-        },
+        bundle,
         name: this.name,
         description: this.description
       })
@@ -232,13 +380,30 @@ export default {
       })
     },
 
-    nameWithLang ({ name, description }) {
+    directionLabel ({ name, description }) {
       return `${name} — [${description}]`
+    },
+
+    getOptionIndex (label, key) {
+      return this.options[label].indexOf(key) + 1
+    },
+
+    getOptionLabels (label) {
+      return this.options[label]
     }
   },
 
   data () {
     return {
+      value: '',
+      options: {
+        antenna_flag: [ '三扇区', '全向天线' ],
+        environment1: [ '大城市', '中小城市' ],
+        environment2: [ '城市', '郊区', '农村', '丘陵', '开阔区' ],
+        branch: [ '上行', '下行' ],
+        uti_or_multi: [ '多源干扰', '单源干扰' ],
+        lte_bindwidth: [ 5, 10, 15, 20 ]
+      },
       lteDirection: { name: '未选择', description: '未选择' },
       radarDirection: { name: '未选择', description: '未选择' },
       userDirection: { name: '未选择', description: '未选择' },
@@ -247,36 +412,47 @@ export default {
       ],
       name: '',
       description: '',
+      paramPublic: {
+        lte_min_d: 5,
+        sR: 5,
+        lR: 5,
+        antenna_flag: null,
+        environment1: null,
+        environment2: null,
+        branch: null,
+        uti_or_multi: null,
+        acir_min: 0,
+        acir_max: 0,
+        acir_space: 0,
+        resource_block: 0,
+        compensation_factor: 0,
+        transpmax: 0
+      },
       paramLte: {
-        input_max_emit_power: 0,
-        input_max_emit_frequency: 0,
-        input_antenna_height: 0,
-        input_antenna_gain: 0,
-        input_antenna_ratio: 0,
-        input_noise_figure: 0,
-        input_feeder_loss: 0,
-        input_station_wide: 0,
-        input_direction: 0
+        lte_bindwidth: 0,
+        lte_antenna_gain: 0,
+        lte_antenna_loss_factor: 0,
+        lte_feederline_factor: 0,
+        lte_noise_figure: 0,
+        lte_power: 0,
+        lte_antenna_height: 0,
+        lte_frequency: 0
       },
       paramUser: {
-        user_max_emit_power: 0,
-        user_max_emit_frequency: 0,
-        user_antenna_height: 0,
         user_antenna_gain: 0,
-        user_antenna_ratio: 0,
+        user_loss_factor: 0,
         user_noise_figure: 0,
-        user_direction: 0
+        user_antenna_height: 0,
+        user_frequency: 0
       },
       paramRadar: {
-        radar_antenna_height: 0,
         radar_antenna_gain: 0,
-        radar_antenna_ratio: 0,
-        radar_noise_figure: 0,
-        radar_feeder_loss: 0,
+        radar_loss_factor: 0,
+        radar_bindwidth: 0,
         radar_antenna_tilt: 0,
-        radar_interference_threshold: 0,
-        radar_wide: 0,
-        radar_direction: 0
+        radar_feeder_loss: 0,
+        radar_noise_figure: 0,
+        radar_antenna_height: 0
       }
     }
   }

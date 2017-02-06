@@ -22,7 +22,9 @@ pub.getTaskById = function (id) {
 }
 
 pub.getTasks = function (author, limit, page) {
-  var query = {}
+  var query = {
+    finished: true
+  }
   if (author) {
     query.author = author
   }

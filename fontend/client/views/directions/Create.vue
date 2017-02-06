@@ -87,7 +87,7 @@ export default {
     ]),
 
     create () {
-      this.addDirection({paramName: this.name, paramFile: this.file, onSuccess: this.successMessage, onFail: this.failMessage})
+      this.addDirection({paramName: this.name, paramFile: this.file, paramDescription: this.description, onSuccess: this.successMessage, onFail: this.failMessage})
     },
 
     onFileChange (e) {

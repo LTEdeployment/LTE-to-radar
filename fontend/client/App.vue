@@ -36,7 +36,9 @@ export default {
   mounted () {
     if (!!this.user && !this.user.email) {
       this.userCheck({router: this.$router})
+      return
     }
+    this.$router.push('/login')
   },
 
   beforeMount () {

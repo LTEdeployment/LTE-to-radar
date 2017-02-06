@@ -54,7 +54,7 @@ router.post('/create', check.checkLogin, function (req, res, next) {
       return task
     })
     .then(function (task) {
-      cache.rpush(config.redis_task_lte_queue, JSON.stringify(task))
+      cache.rpush(config.redis_task_lte_queue, JSON.stringify(tempTask))
       return res.json({
         code: 0,
         message: 'ok',

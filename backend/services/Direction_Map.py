@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 def resort120(x,antenna_flagx):
-    d_f_copy3 = [[0 for x in range(360)] for x in range(181)]  # 对三扇区天线水平方向系数重新排序
-    ## 对三扇区天线水平方向系数重新排序
+    d_f_copy3 = [[0 for i in range(360)] for j in range(181)]  # 对三扇区天线水平方向系数重新排序
+    # 对三扇区天线水平方向系数重新排序
     if antenna_flagx == 1:  ## 120度天线
         for j in range(120):
             for i in range(181):

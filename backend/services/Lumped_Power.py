@@ -79,7 +79,6 @@ def gathering1(antenna_flag, lte_min_d, sR, lR, lP, lH, lF, uH, uF, lte_bindwidt
     # 系统载入部分
     cell_radius, hexagon_length, legal_lte_numbers = lte_node_generation(sR, lR, antenna_flag,
                                                                          lte_min_d)  # 得到小区半径、六边形长度、有效基站数目
-    print(legal_lte_numbers)
     # LTE载入部分
     for i in range(legal_lte_numbers):
         lte[i].trans_power = lP  # 功率赋值
@@ -169,7 +168,6 @@ def exe_main(acir_min, acir_max, acir_space, antenna_flag, lte_min_d, sR, lR, lP
     acir = acir_min
     threshold += acir_min
     while acir <= acir_max:  # 在最大值与最小值之间循环调用函数
-        print("此次干扰阈值为：%f"%threshold)
         # 计算干扰概率
         s = 0
         for i in range(cycle_index):  # 参数为循环次数
@@ -177,13 +175,13 @@ def exe_main(acir_min, acir_max, acir_space, antenna_flag, lte_min_d, sR, lR, lP
                                     lte_direction_factor, user_direction_factor, radar_direction_factor, environment1,
                                     environment2, elevation, branch, resource_block, uti_or_multi, compensation_factor,
                                     transpmax)  # 得到集总结果
-            print("第%d次干扰结果为：%f"%(i+1,sum_result))
             if sum_result > threshold:
                 s += 1
         interference_probability[j] = s / cycle_index  # 得到给定acir下的干扰概率
-        print("此次干扰概率为：%f"%interference_probability[j])
+        yield (s / cycle_index)
         threshold += acir_space
         acir += acir_space
         j += 1
-    return interference_probability
+    return
+    # return interference_probability
 

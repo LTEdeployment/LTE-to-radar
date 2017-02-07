@@ -413,46 +413,46 @@ export default {
       name: '',
       description: '',
       paramPublic: {
-        lte_min_d: 5,
-        sR: 5,
-        lR: 5,
+        lte_min_d: 1000,
+        sR: 120,
+        lR: 121,
         antenna_flag: null,
         environment1: null,
         environment2: null,
         branch: null,
         uti_or_multi: null,
-        acir_min: 0,
-        acir_max: 0,
-        acir_space: 0,
-        resource_block: 0,
-        compensation_factor: 0,
-        transpmax: 0
+        acir_min: 6,
+        acir_max: 8,
+        acir_space: 0.4,
+        resource_block: 1,
+        compensation_factor: 0.8,
+        transpmax: 23
       },
       paramLte: {
-        lte_bindwidth: 0,
-        lte_antenna_gain: 0,
-        lte_antenna_loss_factor: 0,
+        lte_bindwidth: 20,
+        lte_antenna_gain: 15,
+        lte_antenna_loss_factor: 0.9,
         lte_feederline_factor: 0,
-        lte_noise_figure: 0,
-        lte_power: 0,
-        lte_antenna_height: 0,
-        lte_frequency: 0
+        lte_noise_figure: 5,
+        lte_power: 43,
+        lte_antenna_height: 30,
+        lte_frequency: 3500
       },
       paramUser: {
         user_antenna_gain: 0,
-        user_loss_factor: 0,
-        user_noise_figure: 0,
-        user_antenna_height: 0,
-        user_frequency: 0
+        user_loss_factor: 0.9,
+        user_noise_figure: 9,
+        user_antenna_height: 1.5,
+        user_frequency: 3500
       },
       paramRadar: {
-        radar_antenna_gain: 0,
-        radar_loss_factor: 0,
-        radar_bindwidth: 0,
+        radar_antenna_gain: 34,
+        radar_loss_factor: 0.9,
+        radar_bindwidth: 20,
         radar_antenna_tilt: 0,
         radar_feeder_loss: 0,
-        radar_noise_figure: 0,
-        radar_antenna_height: 0
+        radar_noise_figure: 5,
+        radar_antenna_height: 8
       }
     }
   }

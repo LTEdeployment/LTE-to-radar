@@ -162,26 +162,24 @@ def exe_main(acir_min, acir_max, acir_space, antenna_flag, lte_min_d, sR, lR, lP
     # 干扰阈值
     threshold = -174 + 10 * log10(radar_bindwidth * 1000000) + radar1.noise_factor - 10
     # acir部分
-    acir_numbers = int((acir_max - acir_min) / acir_space + 1)  # 计算acir的个数
-    interference_probability = [0] * acir_numbers  # 利用数组记录不同的ACIR下得到的干扰概率
     j = 0  # 记录数组序号
     acir = acir_min
     threshold += acir_min
     while acir <= acir_max:  # 在最大值与最小值之间循环调用函数
         # 计算干扰概率
         s = 0
+        print('threshold: %s' % threshold)
         for i in range(cycle_index):  # 参数为循环次数
             sum_result = gathering2(cell_radius, legal_lte_numbers, single_users, user_numbers, sR, lR,
                                     lte_direction_factor, user_direction_factor, radar_direction_factor, environment1,
                                     environment2, elevation, branch, resource_block, uti_or_multi, compensation_factor,
                                     transpmax)  # 得到集总结果
+            print('sum_result: %s' % sum_result)
             if sum_result > threshold:
                 s += 1
-        interference_probability[j] = s / cycle_index  # 得到给定acir下的干扰概率
-        yield (s / cycle_index)
+        yield (float(s) / float(cycle_index))
         threshold += acir_space
         acir += acir_space
         j += 1
     return
-    # return interference_probability
 

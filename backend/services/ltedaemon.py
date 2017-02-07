@@ -57,6 +57,8 @@ def handle_task(task):
     lte = get_sub_bundle(bundle, 'lte')
     user = get_sub_bundle(bundle, 'user')
     radar = get_sub_bundle(bundle, 'radar')
+    task_item = task_collections.find_one({'name': task['name']})
+    task_item['result'] = []
     result = exe_main(pub('acir_min'), pub('acir_max'), pub('acir_space'), pub('antenna_flag'),
                       pub('lte_min_d'), pub('sR'), pub('lR'), lte('lte_power'),
                       lte('lte_antenna_height'), lte('lte_frequency'),
@@ -68,7 +70,9 @@ def handle_task(task):
                       pub('resource_block'), lte('lte_feederline_factor'), radar('radar_feeder_loss'), lte('lte_noise_figure'),
                       user('user_noise_figure'), radar('radar_noise_figure'), pub('uti_or_multi'), pub('compensation_factor'), pub('transpmax'), 6)
     for item in result:
-        print 'result: %d' % item
+        print 'result: %f' % item
+        task_item['result'].append(item)
+        task_collections.save(task_item)
 
 
 def log_print(message):

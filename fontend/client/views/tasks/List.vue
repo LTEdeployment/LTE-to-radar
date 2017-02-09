@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tile is-ancestor" v-for="(item, index) in directions.directions">
+    <div class="tile is-ancestor" v-for="(item, index) in tasks.tasks">
       <div class="tile is-parent is-8">
         <article class="tile is-child box">
           <h4 class="title"> {{ getTitle(item) }} </h4>
@@ -9,18 +9,7 @@
       </div>
       <div class="tile is-parent is-4">
         <article class="tile is-child box">
-          <p>平面旋转角度</p>
-          <div class="block">
-            <p>
-              <tooltip type="success" :label="per" placement="top" always>
-                <span class="tooltip-value"></span>
-              </tooltip>
-              <slider type="success" size="normal" :value="value" :max="360" :step="1" is-fullwidth @change="update"></slider>
-            </p>
-            <p>
-              <input class="input" type="number" v-model="value" min="0" max="360" input/>
-            </p>
-          </div>
+          <p>详细信息</p>
         </article>
       </div>
     </div>
@@ -52,7 +41,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      directions: 'directions'
+      tasks: 'tasks'
     }),
 
     per () {
@@ -73,8 +62,8 @@ export default {
   },
 
   mounted () {
-    this.getDirectionsList({ page: this.page })
-    this.$http.get('http://computebackend.webdev.com/api/directions/amount')
+    this.getTasksList({ page: this.page })
+    this.$http.get('http://computebackend.webdev.com/api/tasks/amount')
       .then(function (response) {
         if (response.body.code !== 0) {
           console.log('error' + response.body.message)
@@ -103,12 +92,12 @@ export default {
 
   methods: {
     ...mapActions([
-      'getDirectionsList'
+      'getTasksList'
     ]),
 
     getTitle (item) {
       if (!item.finished) {
-        return item.name + '（未解析）'
+        return item.name + '（未完成）'
       }
       return item.name
     },
@@ -122,8 +111,7 @@ export default {
         return
       }
       this.page = page
-      console.log(`page: ${page}`)
-      this.getDirectionsList({ page: this.page })
+      this.getTasksList({ page: this.page })
     },
 
     seriesData (item) {
@@ -131,16 +119,25 @@ export default {
         labels: [],
         datasets: [{
           data: [],
-          label: '数据'
+          label: '干扰概率'
         }]
       }
-      for (let i = 0; i <= 360; i++) {
-        data.labels.push(i + '')
-      }
-      if (!item || !item.data) {
+      if (!item || !item.bundle || !item.result) {
         return data
       }
-      data.datasets[0].data = item.data[80]
+      let acirMin = item['bundle']['pub']['acir_min']
+      let acirMax = item['bundle']['pub']['acir_max']
+      let acirSpace = item['bundle']['pub']['acir_space']
+      if (!acirMin || !acirMax || !acirSpace) {
+        return data
+      }
+      acirMin = Number(acirMin)
+      acirMax = Number(acirMax)
+      acirSpace = Number(acirSpace)
+      for (let acir = acirMin; acir <= acirMax; acir += acirSpace) {
+        data.labels.push(acir.toFixed(2) + '')
+      }
+      data.datasets[0].data = item.result
       return data
     }
   }

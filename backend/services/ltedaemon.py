@@ -16,13 +16,12 @@ mongo_client = MongoClient(config['mongo_uri'])
 direction_collections = mongo_client[config['mongo_db']]['directions']
 task_collections = mongo_client[config['mongo_db']]['tasks']
 
-
+# 将一个字符串转换为一个整型或者浮点型数据
 def num(s):
     try:
         return int(s)
     except ValueError:
         return float(s)
-
 
 def get_direction(direction_name):
     direction = direction_collections.find_one({'name': direction_name})
@@ -33,7 +32,6 @@ def get_direction(direction_name):
         log_print('direction ' + direction_name + 'not ready yet!')
         return None
     return direction['data']
-
 
 def get_sub_bundle(bundle, name):
     sub_bundle = bundle[name]
@@ -66,13 +64,14 @@ def handle_task(task):
                       radar('radar_antenna_height'), lte('lte_antenna_gain'), user('user_antenna_gain'),
                       radar('radar_antenna_gain'), lte('lte_antenna_loss_factor'), user('user_loss_factor'),
                       radar('radar_loss_factor'), radar('radar_bindwidth'), lteDirection, userDirection, radarDirection,
-                      pub('environment1'), pub('environment2'), radar('radar_antenna_tilt'), 2, # pub('branch'),
+                      pub('environment1'), pub('environment2'), radar('radar_antenna_tilt'), pub('branch'),
                       pub('resource_block'), lte('lte_feederline_factor'), radar('radar_feeder_loss'), lte('lte_noise_figure'),
                       user('user_noise_figure'), radar('radar_noise_figure'), pub('uti_or_multi'), pub('compensation_factor'), pub('transpmax'), 6)
     for item in result:
         print 'result: %f' % item
         task_item['result'].append(item)
         task_collections.save(task_item)
+    task_item['finished'] = True
 
 
 def log_print(message):

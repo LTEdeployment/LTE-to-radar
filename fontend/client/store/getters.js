@@ -6,6 +6,7 @@ const effect = state => state.app.effect
 const menuitems = state => state.menu.items
 const user = state => state.user
 const directions = state => state.directions
+const tasks = state => state.tasks
 const modalData = state => state.modalData
 
 const componententry = state => {
@@ -21,6 +22,7 @@ export {
   menuitems,
   user,
   directions,
+  tasks,
   modalData,
   componententry
 }

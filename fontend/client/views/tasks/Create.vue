@@ -314,7 +314,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 import Multiselect from 'vue-multiselect'
 import configJson from '../../../config/api.json'
 
@@ -342,10 +342,6 @@ export default {
   },
 
   methods: {
-    ...mapActions([
-      'taskCreate'
-    ]),
-
     create () {
       let pub = {}
       for (let key in this.paramPublic) {
@@ -419,7 +415,7 @@ export default {
         antenna_flag: null,
         environment1: null,
         environment2: null,
-        branch: null,
+        branch: '下行',
         uti_or_multi: null,
         acir_min: 6,
         acir_max: 8,

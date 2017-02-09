@@ -14,6 +14,11 @@ export default {
       name: '新建任务',
       path: 'create',
       component: lazyLoading('tasks/Create')
+    },
+    {
+      name: '任务列表',
+      path: 'list',
+      component: lazyLoading('tasks/List')
     }
   ]
 }

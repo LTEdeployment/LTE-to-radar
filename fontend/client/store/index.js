@@ -8,6 +8,7 @@ import app from './modules/app'
 import menu from './modules/menu'
 import modal from './modules/modal'
 import directions from './modules/directions'
+import tasks from './modules/tasks'
 import user from './modules/user'
 
 Vue.use(Vuex)
@@ -21,7 +22,8 @@ const store = new Vuex.Store({
     modal,
     menu,
     user,
-    directions
+    directions,
+    tasks
   },
   state: {
     pkg

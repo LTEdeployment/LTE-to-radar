@@ -18,14 +18,28 @@ router.get('/id/:id', check.checkLogin, function (req, res, next) {
     })
 })
 
+router.get('/amount', check.checkLogin, function (req, res, next) {
+  let author = req.session.user.email
+
+  TaskModel
+    .getAmount(author)
+    .then(function (amount) {
+      res.json({code: 0, message: 'ok', data: amount})
+    })
+    .catch(function (e) {
+      res.json({code: -1, message: e.message, data: null})
+    })
+})
+
 // 获取该用户的任务列表
 router.get('/list/:page', check.checkLogin, function (req, res, next) {
   let author = req.session.user.email
   let page = req.params.page
+
   TaskModel
-    .getTasks(author, 20, page)
+    .getTasks(author, 10, page)
     .then(function (result) {
-      res.send(JSON.stringify(result))
+      res.json(result)
     })
     .catch(function (e) {
       next(e)
@@ -44,7 +58,8 @@ router.post('/create', check.checkLogin, function (req, res, next) {
     author,
     bundle,
     name,
-    description
+    description,
+    finished: false
   }
 
   TaskModel

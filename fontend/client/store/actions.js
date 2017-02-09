@@ -109,6 +109,20 @@ export const getDirectionsList = ({
     })
 }
 
+export const getTasksList = ({
+  commit
+}, payload) => {
+  let page = payload.page
+  Vue.http
+    .get(`${BASE_API_URL}tasks/list/${page}`)
+    .then(function (response) {
+      console.log(response.body)
+      commit(types.UPDATE_TASKS, response.body)
+    }, function (error) {
+      console.log('error: ' + error)
+    })
+}
+
 export const userLogout = ({
   commit
 }, payload) => {
@@ -147,20 +161,6 @@ export const userRegister = ({
     }, function (error) {
       console.log('error' + error)
       payload.onFail('' + error)
-    })
-}
-
-export const taskCreate = ({
-  commit
-}, payload) => {
-  Vue.http
-    .post(`${BASE_API_URL}tasks/create`, {
-      bundle: payload
-    })
-    .then(function (response) {
-      console.log(response.body)
-    }, function (error) {
-      console.log('error' + error)
     })
 }
 

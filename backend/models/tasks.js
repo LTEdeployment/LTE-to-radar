@@ -22,9 +22,7 @@ pub.getTaskById = function (id) {
 }
 
 pub.getTasks = function (author, limit, page) {
-  var query = {
-    finished: true
-  }
+  let query = {}
   if (author) {
     query.author = author
   }
@@ -40,6 +38,16 @@ pub.getTasks = function (author, limit, page) {
       _id: -1
     })
     .addCreatedAt()
+    .exec()
+}
+
+pub.getAmount = function (author) {
+  var query = {}
+  if (author) {
+    query.author = author
+  }
+  return Task
+    .count(query)
     .exec()
 }
 

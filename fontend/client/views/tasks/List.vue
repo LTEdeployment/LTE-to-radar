@@ -1,15 +1,18 @@
 <template>
   <div>
-    <div class="tile is-ancestor" v-for="(item, index) in tasks.tasks">
+    <div class="tile is-ancestor" v-for="(item, index) in seriesData">
       <div class="tile is-parent is-8">
         <article class="tile is-child box">
-          <h4 class="title"> {{ getTitle(item) }} </h4>
-          <chart :type="'line'" :data="seriesData(item)" :options="options"></chart>
+          <h4 class="title"> {{ item.title }} </h4>
+          <chart :type="'line'" :data="item" :options="options"></chart>
         </article>
       </div>
       <div class="tile is-parent is-4">
         <article class="tile is-child box">
-          <p>详细信息</p>
+          <p>{{ '基站方向图：' + item.lteDirection }}</p>
+          <p>{{ '用户方向图：' + item.userDirection }}</p>
+          <p>{{ '雷达方向图：' + item.radarDirection }}</p>
+          <p>{{ item.description }}</p>
         </article>
       </div>
     </div>
@@ -22,7 +25,7 @@
 <script>
 import { Collapse, Item as CollapseItem } from 'vue-bulma-collapse'
 import { mapGetters, mapActions } from 'vuex'
-import Chart from 'vue-bulma-chartjs'
+import Chart from '../../components/Chartjs'
 import Tooltip from 'vue-bulma-tooltip'
 import Slider from 'vue-bulma-slider'
 // 使用 vue-bulma-tabs 作为分页
@@ -44,8 +47,51 @@ export default {
       tasks: 'tasks'
     }),
 
-    per () {
-      return this.value + ''
+    seriesData () {
+      if (this.tasks.tasks.length === 0) {
+        return []
+      }
+      let list = []
+      for (let item of this.tasks.tasks) {
+        let data = {
+          labels: [],
+          datasets: [{
+            data: [],
+            label: '干扰概率'
+          }]
+        }
+        data.title = item.finished ? item.name : item.name + '（未完成）'
+        if (!item || !item.bundle || !item.result) {
+          console.log('item 不完整')
+          console.log(JSON.stringify(item))
+          list.push(data)
+          continue
+        }
+        data.userDirection = item.bundle['userDirection']
+        data.lteDirection = item.bundle['lteDirection']
+        data.radarDirection = item.bundle['radarDirection']
+        data.description = item.description
+        let acirMin = item['bundle']['pub']['acir_min']
+        let acirMax = item['bundle']['pub']['acir_max']
+        let acirSpace = item['bundle']['pub']['acir_space']
+        if (!acirMin || !acirMax || !acirSpace) {
+          console.log('acir 不完整')
+          console.log(JSON.stringify(item))
+          list.push(data)
+          continue
+        }
+        acirMin = Number(acirMin)
+        acirMax = Number(acirMax)
+        acirSpace = Number(acirSpace)
+        for (let acir = acirMin; acir <= acirMax; acir += acirSpace) {
+          data.labels.push(acir.toFixed(2) + '')
+        }
+        if (item.result) {
+          data.datasets[0].data = item.result
+        }
+        list.push(data)
+      }
+      return list
     },
 
     pages () {
@@ -79,7 +125,6 @@ export default {
     return {
       page: 1,
       amount: 0,
-      value: 1,
       options: {
         segmentShowStroke: false,
         tooltips: {
@@ -95,50 +140,12 @@ export default {
       'getTasksList'
     ]),
 
-    getTitle (item) {
-      if (!item.finished) {
-        return item.name + '（未完成）'
-      }
-      return item.name
-    },
-
-    update (index) {
-      this.value = Number(index)
-    },
-
     setPage (page) {
       if (this.page === page) {
         return
       }
       this.page = page
       this.getTasksList({ page: this.page })
-    },
-
-    seriesData (item) {
-      let data = {
-        labels: [],
-        datasets: [{
-          data: [],
-          label: '干扰概率'
-        }]
-      }
-      if (!item || !item.bundle || !item.result) {
-        return data
-      }
-      let acirMin = item['bundle']['pub']['acir_min']
-      let acirMax = item['bundle']['pub']['acir_max']
-      let acirSpace = item['bundle']['pub']['acir_space']
-      if (!acirMin || !acirMax || !acirSpace) {
-        return data
-      }
-      acirMin = Number(acirMin)
-      acirMax = Number(acirMax)
-      acirSpace = Number(acirSpace)
-      for (let acir = acirMin; acir <= acirMax; acir += acirSpace) {
-        data.labels.push(acir.toFixed(2) + '')
-      }
-      data.datasets[0].data = item.result
-      return data
     }
   }
 }

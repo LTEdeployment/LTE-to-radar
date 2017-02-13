@@ -1,7 +1,7 @@
 import * as types from '../../mutation-types'
 
 const state = {
-  tasks: [ 'fefe' ]
+  tasks: []
 }
 
 const mutations = {

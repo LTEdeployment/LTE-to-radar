@@ -33,7 +33,7 @@
 <script>
 import { Collapse, Item as CollapseItem } from 'vue-bulma-collapse'
 import { mapGetters, mapActions } from 'vuex'
-import Chart from 'vue-bulma-chartjs'
+import Chart from '../../components/Chartjs'
 import Tooltip from 'vue-bulma-tooltip'
 import Slider from 'vue-bulma-slider'
 // 使用 vue-bulma-tabs 作为分页

@@ -56,6 +56,9 @@ def handle_task(task):
     user = get_sub_bundle(bundle, 'user')
     radar = get_sub_bundle(bundle, 'radar')
     task_item = task_collections.find_one({'name': task['name']})
+    if task_item == None:
+        log_print('can not find task in db!')
+        return
     task_item['result'] = []
     result = exe_main(pub('acir_min'), pub('acir_max'), pub('acir_space'), pub('antenna_flag'),
                       pub('lte_min_d'), pub('sR'), pub('lR'), lte('lte_power'),
@@ -72,7 +75,7 @@ def handle_task(task):
         task_item['result'].append(item)
         task_collections.save(task_item)
     task_item['finished'] = True
-
+    task_collections.save(task_item)
 
 def log_print(message):
     if (config['DEBUG_ENV']):
@@ -80,8 +83,8 @@ def log_print(message):
 
 # loop
 while(True):
-    # task = redis_client.lpop(config['redis_task_lte_queue'])
-    task = redis_client.lindex(config['redis_task_lte_queue'], 0)
+    task = redis_client.lpop(config['redis_task_lte_queue'])
+    # task = redis_client.lindex(config['redis_task_lte_queue'], 0)
     if (not task):
         log_print('queue is empty')
         time.sleep(config['queue_empty_sleep_time'])

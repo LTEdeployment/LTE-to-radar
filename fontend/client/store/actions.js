@@ -116,7 +116,6 @@ export const getTasksList = ({
   Vue.http
     .get(`${BASE_API_URL}tasks/list/${page}`)
     .then(function (response) {
-      console.log(response.body)
       commit(types.UPDATE_TASKS, response.body)
     }, function (error) {
       console.log('error: ' + error)

@@ -326,9 +326,6 @@ export default {
   }),
 
   mounted () {
-    if (!this.user.email) {
-      this.$router.push('/login')
-    }
     this.$http.get(`${configJson['base_url']}api/directions/all`)
       .then(function (response) {
         if (response.body && response.body.code === 0) {

@@ -1,12 +1,12 @@
 import * as types from '../../mutation-types'
 import { lazyLoading } from './lazyLoading'
-import charts from './charts'
+// import charts from './charts'
 import tasks from './tasks'
 import directions from './directions'
 import profile from './profile'
-import uifeatures from './uifeatures'
-import components from './components'
-import tables from './tables'
+// import uifeatures from './uifeatures'
+// import components from './components'
+// import tables from './tables'
 
 /*
  * show: meta.label -> name
@@ -31,12 +31,12 @@ const state = {
       },
       component: lazyLoading('register', true)
     },
-    charts,
+    // charts,
     directions,
     tasks,
-    uifeatures,
-    components,
-    tables,
+    // uifeatures,
+    // components,
+    // tables,
     profile
   ]
 }

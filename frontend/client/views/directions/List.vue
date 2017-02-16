@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="tile is-ancestor" v-for="(item, index) in listData">
+    <div class="tile is-ancestor" v-for="(item, index) in directions.directions">
       <div class="tile is-parent is-8">
         <article class="tile is-child box">
           <div>
-            <p class="title left">{{ item.title }}</p>
+            <p class="title left">{{ getTitle(item) }}</p>
             <p class="right">{{ item.created_at }}</p>
           </div>
-          <chart :type="'line'" :data="item" :options="options"></chart>
+          <chart :type="'line'" :data="seriesData(item, index)" :options="options"></chart>
         </article>
       </div>
       <div class="tile is-parent is-4">
@@ -15,13 +15,12 @@
           <p>平面旋转角度</p>
           <div class="block">
             <p>
-              <tooltip type="success" :label="per" placement="top" always>
+              <tooltip type="success" :label="per(index)" placement="top" always>
                 <span class="tooltip-value"></span>
               </tooltip>
-              <slider type="success" size="normal" :value="value" :max="360" :step="1" is-fullwidth @change="update"></slider>
             </p>
             <p>
-              <input class="input" type="number" v-model="value" min="0" max="360" input/>
+              <input class="input" type="number" v-model="listValue[index]" min="0" max="360" input/>
             </p>
           </div>
         </article>
@@ -58,24 +57,6 @@ export default {
       directions: 'directions'
     }),
 
-    per () {
-      return this.value + ''
-    },
-
-    listData () {
-      if (this.directions.directions.length === 0) {
-        return []
-      }
-      let list = []
-      for (let item of this.directions.directions) {
-        let data = this.seriesData(item)
-        data.title = this.getTitle(item)
-        data.created_at = item.created_at
-        list.push(data)
-      }
-      return list
-    },
-
     pages () {
       let pageAmount = this.amount / 10
       if (this.amount % 10) {
@@ -108,7 +89,7 @@ export default {
   data () {
     return {
       amount: 0,
-      value: 1,
+      listValue: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       options: {
         segmentShowStroke: false,
         tooltips: {
@@ -131,8 +112,8 @@ export default {
       return item.name
     },
 
-    update (index) {
-      this.value = Number(index)
+    per (index) {
+      return this.listValue[index] + ''
     },
 
     setPage (page) {
@@ -147,7 +128,7 @@ export default {
       setStorePage: types.UPDATE_DIRECTIONS_PAGE
     }),
 
-    seriesData (item) {
+    seriesData (item, index) {
       let data = {
         labels: [],
         datasets: [{
@@ -161,7 +142,7 @@ export default {
       if (!item || !item.data) {
         return data
       }
-      data.datasets[0].data = item.data[80]
+      data.datasets[0].data = item.data[this.listValue[index]]
       return data
     }
   }

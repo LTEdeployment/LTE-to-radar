@@ -49,8 +49,8 @@ export default {
       this.$nextTick(() => {
         // this.chart.data.datasets = val.datasets
         // this.chart.data.labels = val.labels
-        console.log('chartjs watch data')
         // this.chart.update(val)
+        this.chart.destroy()
         this.chart = new Chart(this.$el, {
           type: this.type,
           data: this.data,

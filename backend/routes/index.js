@@ -11,4 +11,10 @@ module.exports = function (app) {
       res.render('404')
     }
   })
+  // error page
+  app.use(function (err, req, res, next) {
+    res.render('error', {
+      error: err
+    })
+  })
 }

@@ -25,10 +25,10 @@ def num(s):
 
 def get_direction(direction_name):
     direction = direction_collections.find_one({'name': direction_name})
-    if (direction == None):
+    if direction == None:
         log_print('direction %s not found!' % direction_name)
         return None
-    if (direction['data'] == None):
+    if direction['data'] == None:
         log_print('direction ' + direction_name + 'not ready yet!')
         return None
     return direction['data']
@@ -78,18 +78,18 @@ def handle_task(task):
     task_collections.save(task_item)
 
 def log_print(message):
-    if (config['DEBUG_ENV']):
+    if config['DEBUG_ENV']:
       print message
 
 # loop
 while(True):
-    task = redis_client.lpop(config['redis_task_lte_queue'])
+    task = redis_client.rpop(config['redis_task_lte_queue'])
     # task = redis_client.lindex(config['redis_task_lte_queue'], 0)
-    if (not task):
+    if not task:
         log_print('queue is empty')
         time.sleep(config['queue_empty_sleep_time'])
         continue
     log_print(task)
     handle_task(json.loads(task))
-    if (config['DEBUG_ENV']):
+    if config['DEBUG_ENV']:
         time.sleep(config['queue_empty_sleep_time'])

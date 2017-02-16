@@ -31,7 +31,7 @@ export const addDirection = function ({
       payload.onSuccess('成功')
     }, function (error) {
       // network error
-      payload.onFail('error' + error)
+      payload.onFail('error ' + error)
     })
 }
 
@@ -49,9 +49,13 @@ export const userLogin = ({
       }
     })
     .then(function (response) {
+      if (response.body.code === 401) {
+        payload.onSuccess(response.body.message)
+        payload.router.push('/')
+        return
+      }
       if (response.body.code !== 0) {
-        console.log(`user logined: ` + JSON.stringify(response.body))
-        payload.onFail('error' + response.body.message)
+        payload.onFail(response.body.message)
         return
       }
       let email = response.body.data.email
@@ -60,8 +64,8 @@ export const userLogin = ({
       payload.onSuccess('成功')
       payload.router.push('/')
     }, function (error) {
-      payload.onFail('error' + error)
-      console.log('error' + error)
+      payload.onFail('error ' + error)
+      console.log('error ' + error)
     })
 }
 
@@ -92,7 +96,7 @@ export const userCheck = ({
       console.log(`user checked: ${email}`)
       commit(types.LOGIN, email)
     }, function (error) {
-      console.log('error' + error)
+      console.log('error ' + error)
     })
 }
 

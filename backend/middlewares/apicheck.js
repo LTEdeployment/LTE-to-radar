@@ -2,7 +2,7 @@ module.exports = {
   checkLogin: function (req, res, next) {
     if (!req.session.user) {
       return res.json({
-        code: -1,
+        code: 403,
         message: 'not signin yet'
       })
     }
@@ -12,7 +12,7 @@ module.exports = {
   checkNotLogin: function (req, res, next) {
     if (req.session.user) {
       return res.json({
-        code: -1,
+        code: 401,
         message: 'already signin'
       })
     }

@@ -100,13 +100,6 @@ app.use(expressWinston.errorLogger({
   ]
 }))
 
-// error page
-app.use(function (err, req, res, next) {
-  res.render('error', {
-    error: err
-  })
-})
-
 if (module.parent) {
   module.exports = app
 } else {

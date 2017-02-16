@@ -11,7 +11,7 @@ router.get('/id/:id', check.checkLogin, function (req, res, next) {
   TaskModel
     .getTaskById(id)
     .then(function (result) {
-      res.send(JSON.stringify(result))
+      res.json(result)
     })
     .catch(function (e) {
       next(e)
@@ -42,7 +42,7 @@ router.get('/list/:page', check.checkLogin, function (req, res, next) {
       res.json(result)
     })
     .catch(function (e) {
-      next(e)
+      res.json({code: -1, message: e.message, data: null})
     })
 })
 
@@ -69,7 +69,7 @@ router.post('/create', check.checkLogin, function (req, res, next) {
       return task
     })
     .then(function (task) {
-      cache.rpush(config.redis_task_lte_queue, JSON.stringify(tempTask))
+      cache.lpush(config.redis_task_lte_queue, JSON.stringify(tempTask))
       return res.json({
         code: 0,
         message: 'ok',
@@ -83,7 +83,7 @@ router.post('/create', check.checkLogin, function (req, res, next) {
           message: '这个名字的计算任务已经存在了哈!'
         })
       }
-      next(e)
+      res.json({code: -1, message: e.message, data: null})
     })
 })
 

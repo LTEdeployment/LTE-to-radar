@@ -91,7 +91,7 @@ router.post('/create', check.checkLogin, upload.single('direction'), function (r
   DirectionModel
     .create(direction)
     .then(function (directionSave) {
-      cache.rpush(config.redis_mat_directions_queue, JSON.stringify(direction))
+      cache.lpush(config.redis_mat_directions_queue, JSON.stringify(direction))
       return res.json({code: 0, message: 'ok', data: directionSave})
     })
     .catch(function (e) {

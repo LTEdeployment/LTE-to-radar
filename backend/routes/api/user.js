@@ -31,7 +31,7 @@ router.post('/signin', checkNotLogin, function (req, res, next) {
       // 检查密码是否匹配
       if (sha1(password) !== user.password) {
         return res.json({
-          code: -1,
+          code: -2,
           message: 'password not match'
         })
       }

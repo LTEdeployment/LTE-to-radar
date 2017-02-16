@@ -316,7 +316,24 @@
 <script>
 import { mapGetters } from 'vuex'
 import Multiselect from 'vue-multiselect'
+import Message from 'vue-bulma-message'
 import configJson from '../../../config/api.json'
+import Vue from 'vue'
+
+const MessageComponent = Vue.extend(Message)
+const openMessage = (propsData = {
+  title: '',
+  message: '',
+  type: '',
+  direction: '',
+  duration: 1500,
+  container: '.messages'
+}) => {
+  return new MessageComponent({
+    el: document.createElement('div'),
+    propsData
+  })
+}
 
 export default {
   components: { Multiselect },
@@ -360,16 +377,24 @@ export default {
         radarDirection: this.radarDirection.name,
         userDirection: this.userDirection.name
       }
-      console.log(bundle)
       this.$http.post(`${configJson['base_url']}api/tasks/create`, {
         bundle,
         name: this.name,
         description: this.description
       })
       .then(function (response) {
-        console.log(response.body)
+        if (!response.body) {
+          this.failMessage('服务器出错')
+          return
+        }
+        if (response.body.code !== 0) {
+          this.failMessage('创建任务失败: ' + response.body.message)
+          return
+        }
+        this.successMessage('创建任务成功')
       }, function (err) {
         console.log('error: ' + JSON.stringify(err))
+        this.failMessage('创建任务失败: ' + JSON.stringify(err))
       })
     },
 
@@ -383,6 +408,24 @@ export default {
 
     getOptionLabels (label) {
       return this.options[label]
+    },
+
+    successMessage (message) {
+      openMessage({
+        title: '提示',
+        message,
+        type: 'success',
+        showCloseButton: true
+      })
+    },
+
+    failMessage (message) {
+      openMessage({
+        title: '提示',
+        message,
+        type: 'warning',
+        showCloseButton: true
+      })
     }
   },
 

@@ -3,7 +3,10 @@
     <div class="tile is-ancestor" v-for="(item, index) in seriesData">
       <div class="tile is-parent is-8">
         <article class="tile is-child box">
-          <h4 class="title"> {{ item.title }} </h4>
+          <div>
+            <p class="title left">{{ item.title }}</p>
+            <p class="right">{{ item.created_at }}</p>
+          </div>
           <chart :type="'line'" :data="item" :options="options"></chart>
         </article>
       </div>
@@ -61,6 +64,7 @@ export default {
           }]
         }
         data.title = item.finished ? item.name : item.name + '（未完成）'
+        data.created_at = item.created_at
         if (!item || !item.bundle || !item.result) {
           console.log('item 不完整')
           console.log(JSON.stringify(item))
@@ -112,7 +116,7 @@ export default {
     this.$http.get('http://computebackend.webdev.com/api/tasks/amount')
       .then(function (response) {
         if (response.body.code !== 0) {
-          console.log('error' + response.body.message)
+          console.log('error ' + response.body.message)
           return
         }
         this.amount = response.body.data
@@ -163,5 +167,13 @@ p {
 }
 .tooltip-value {
   width: 100%;
+}
+.left {
+  float: left;
+  text-align: left;
+}
+.right {
+  float: right;
+  text-align: right;
 }
 </style>

@@ -58,7 +58,6 @@ export default {
   },
 
   mounted () {
-    console.log(`mounted`)
     if (this.user.email) {
       console.log(`already logined, redirect.`)
       this.$router.push('/')
@@ -98,7 +97,6 @@ export default {
 
     goRegister () {
       this.$router.push('/register')
-      // this.userLogout()
     },
 
     successMessage (message) {

@@ -51,6 +51,7 @@ export const userLogin = ({
     .then(function (response) {
       if (response.body.code === 401) {
         payload.onSuccess(response.body.message)
+        commit(types.LOGIN, payload.email)
         payload.router.push('/')
         return
       }
@@ -107,7 +108,7 @@ export const getDirectionsList = ({
   Vue.http
     .get(`${BASE_API_URL}directions/list/${page}`)
     .then(function (response) {
-      commit(types.UPDATE_DIRECTIONS, response.body)
+      commit(types.UPDATE_DIRECTIONS, response.body, page)
     }, function (error) {
       console.log('error: ' + error)
     })
@@ -120,7 +121,7 @@ export const getTasksList = ({
   Vue.http
     .get(`${BASE_API_URL}tasks/list/${page}`)
     .then(function (response) {
-      commit(types.UPDATE_TASKS, response.body)
+      commit(types.UPDATE_TASKS, response.body, page)
     }, function (error) {
       console.log('error: ' + error)
     })

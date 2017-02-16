@@ -32,7 +32,6 @@ import Chart from '../../components/Chartjs'
 import Tooltip from 'vue-bulma-tooltip'
 import Slider from 'vue-bulma-slider'
 import * as types from '../../store/mutation-types'
-// 使用 vue-bulma-tabs 作为分页
 import { Tabs, TabPane } from '../../components/pagination'
 
 export default {

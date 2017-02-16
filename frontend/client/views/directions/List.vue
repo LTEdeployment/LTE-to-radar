@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="tile is-ancestor" v-for="(item, index) in directions.directions">
+    <div class="tile is-ancestor" v-for="(item, index) in listData">
       <div class="tile is-parent is-8">
         <article class="tile is-child box">
           <div>
-            <p class="title left">{{ getTitle(item) }}</p>
+            <p class="title left">{{ item.title }}</p>
             <p class="right">{{ item.created_at }}</p>
           </div>
-          <chart :type="'line'" :data="seriesData(item)" :options="options"></chart>
+          <chart :type="'line'" :data="item" :options="options"></chart>
         </article>
       </div>
       <div class="tile is-parent is-4">
@@ -40,7 +40,6 @@ import Chart from '../../components/Chartjs'
 import Tooltip from 'vue-bulma-tooltip'
 import * as types from '../../store/mutation-types'
 import Slider from 'vue-bulma-slider'
-// 使用 vue-bulma-tabs 作为分页
 import { Tabs, TabPane } from '../../components/pagination'
 
 export default {
@@ -61,6 +60,20 @@ export default {
 
     per () {
       return this.value + ''
+    },
+
+    listData () {
+      if (this.directions.directions.length === 0) {
+        return []
+      }
+      let list = []
+      for (let item of this.directions.directions) {
+        let data = this.seriesData(item)
+        data.title = this.getTitle(item)
+        data.created_at = item.created_at
+        list.push(data)
+      }
+      return list
     },
 
     pages () {
@@ -127,7 +140,6 @@ export default {
         return
       }
       this.setStorePage(page)
-      console.log(this.directions.page)
       this.getDirectionsList({ page: this.directions.page })
     },
 

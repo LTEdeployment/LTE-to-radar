@@ -1,3 +1,3 @@
 #!/bin/sh
-exec ./ltedaemon.py &
-exec ./matdaemon.py &
+exec ./ltedaemon.py dev&
+exec ./matdaemon.py dev&

@@ -1,20 +1,11 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
-import redis
 import time
 import json
-from pymongo import MongoClient
 from Lumped_Power import exe_main
-
-# read config
-with open('../config/default.json') as config_file:
-    config = json.load(config_file)
-
-# init redis & mongo
-redis_client = redis.StrictRedis(host=config['redis_host'], port=config['redis_port'], db=config['redis_db'])
-mongo_client = MongoClient(config['mongo_uri'])
-direction_collections = mongo_client[config['mongo_db']]['directions']
-task_collections = mongo_client[config['mongo_db']]['tasks']
+from config import config
+from redis_client import redis_client
+from mongo_client import direction_collections, task_collections
 
 # 将一个字符串转换为一个整型或者浮点型数据
 def num(s):

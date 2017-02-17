@@ -2,7 +2,7 @@ const router = require('express').Router()
 const TaskModel = require('../../models/tasks')
 const check = require('../../middlewares/apicheck')
 const cache = require('../../lib/cache')
-const config = require('config-lite')
+const config = require('xconfigjs')
 
 // 根据任务 ID 查询指定的任务
 // TODO 不能找到相应的任务，原因估计在 Mongolass 上

@@ -4,7 +4,7 @@ const uuidV4 = require('uuid/v4')
 const DirectionModel = require('../../models/directions')
 const check = require('../../middlewares/apicheck')
 const cache = require('../../lib/cache')
-const config = require('config-lite')
+const config = require('xconfigjs')
 
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {

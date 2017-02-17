@@ -1,18 +1,11 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
-import redis, time, json
+import time, json
 import scipy.io as scio
-from pymongo import MongoClient
 from logbook import Logger, TimedRotatingFileHandler
-
-# read config
-with open('../config/default.json') as config_file:
-    config = json.load(config_file)
-
-# init redis & mongo
-redis_client = redis.StrictRedis(host = config['redis_host'], port = config['redis_port'], db = config['redis_db'])
-mongo_client = MongoClient(config['mongo_uri'])
-collections = mongo_client[config['mongo_db']]['directions']
+from config import config
+from redis_client import redis_client
+from mongo_client import direction_collections
 
 logger = Logger('matdaemon')
 handler = TimedRotatingFileHandler('/tmp/logs', date_format="%Y%m%d")
@@ -29,13 +22,13 @@ def read_mat(file_path):
 def handle_task(directions_task):
     file_path = '../uploads/' + directions_task['file']['filename']
     directions = read_mat(file_path)
-    direction = collections.find_one({'name': directions_task['name']})
+    direction = direction_collections.find_one({'name': directions_task['name']})
     if direction == None:
         log_print('direction update failed: %s' % directions_task['name'])
         return
     direction['data'] = directions.tolist()
     direction['finished'] = True
-    collections.save(direction)
+    direction_collections.save(direction)
     log_print('direction update: %s' % directions_task['name'])
 
 def log_print(message):

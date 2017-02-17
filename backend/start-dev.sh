@@ -1,2 +1,2 @@
 #!/bin/sh
-exec supervisor index.js
+exec npm run dev

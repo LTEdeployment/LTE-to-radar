@@ -1,4 +1,4 @@
-var config = require('config-lite')
+var config = require('xconfigjs')
 var Mongolass = require('mongolass')
 var mongolass = new Mongolass()
 var objectIdToTimestamp = require('objectid-to-timestamp')
